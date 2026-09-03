@@ -1,40 +1,58 @@
 <!DOCTYPE html>
 <html lang="ar">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Pantalon - سويت بانطس</title><link rel="stylesheet" href="style.css" /><script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Pantalon - Sweatpants</title><link rel="stylesheet" href="style.css" /><script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /></head>
 <body class="bg-black text-white">
-    <header class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800 px-4 py-3 flex justify-between items-center">
+    <div class="announcement-bar"><span>🚚 Free Shipping Across Egypt | Delivery in 24-48 Hours</span></div>
+    <header class="sticky top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-gray-800 px-4 py-3 flex justify-between items-center">
         <a href="index.html" class="text-2xl font-bold text-[#D4AF37] tracking-widest hover:opacity-80">PANTALON</a>
         <div class="flex items-center gap-4">
-            <a href="jeans.html" class="text-sm hover:text-[#D4AF37] transition">جينز</a>
-            <a href="basics.html" class="text-sm hover:text-[#D4AF37] transition">تيشرتات</a>
-            <a href="sweatpants.html" class="text-sm text-[#D4AF37] border-b border-[#D4AF37]">سويت بانطس</a>
+            <a href="jeans.html" class="text-sm hover:text-[#D4AF37] transition">Jeans</a>
+            <a href="basics.html" class="text-sm hover:text-[#D4AF37] transition">T-Shirts</a>
+            <a href="sweatpants.html" class="text-sm text-[#D4AF37] border-b border-[#D4AF37]">Sweatpants</a>
             <button onclick="toggleCart()" class="relative text-white text-2xl hover:text-[#D4AF37] transition"><i class="fas fa-shopping-bag"></i><span id="cartCount" class="absolute -top-2 -right-3 bg-red-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span></button>
         </div>
     </header>
-    <main class="pt-20 px-4 max-w-7xl mx-auto">
-        <h2 class="text-4xl font-bold text-[#D4AF37] text-center mb-2">🩳 سويت بانطس</h2>
-        <p class="text-center text-gray-400 mb-8">مقاسات M, L, XL</p>
-        <div id="productsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-        <div class="text-center mt-10"><a href="index.html" class="text-gray-500 hover:text-white text-sm"><i class="fas fa-arrow-left mr-2"></i> العودة للرئيسية</a></div>
-        <div class="mt-20 border-t border-gray-800 pt-6 text-center text-xs text-gray-600">© 2026 Pantalon</div>
+    <main class="px-4 max-w-7xl mx-auto pb-10">
+        <div class="text-center py-6 border-b border-gray-800 mb-6">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-[#D4AF37] tracking-widest">PANTALON</h1>
+            <p class="text-xs md:text-sm text-gray-400 font-light tracking-[0.3em] uppercase mt-1">Elevate Your Style</p>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold text-[#D4AF37] text-center mb-2">🩳 Sweatpants</h2>
+        <p class="text-center text-gray-400 mb-6 text-sm">Sizes M, L, XL</p>
+        
+        <!-- Filters (مقاسات M, L, XL بس) -->
+        <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between bg-gray-900/50 p-4 rounded-2xl border border-gray-800">
+            <input id="searchInput" type="text" placeholder="🔍 Search..." class="search-bar text-sm w-full" />
+            <div class="filter-group w-full md:w-auto">
+                <select id="categoryFilter" class="filter-select text-xs w-full md:w-auto"><option value="sweatpants" selected>Sweatpants</option></select>
+                <select id="sizeFilter" class="filter-select text-xs w-full md:w-auto"><option value="">All Sizes</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option></select>
+                <select id="colorFilter" class="filter-select text-xs w-full md:w-auto"><option value="">All Colors</option><option value="Black">Black</option><option value="Grey">Grey</option><option value="Olive">Olive</option></select>
+                <select id="sortFilter" class="filter-select text-xs w-full md:w-auto"><option value="newest">Newest</option><option value="price-low">Price: Low → High</option><option value="price-high">Price: High → Low</option></select>
+            </div>
+        </div>
+
+        <div id="productsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6"></div>
+        <div class="text-center mt-10"><a href="index.html" class="text-gray-500 hover:text-white text-sm"><i class="fas fa-arrow-left mr-2"></i> Back to Home</a></div>
+        
+        <div class="mt-16 border-t border-gray-800 pt-10"><h2 class="text-xl md:text-2xl font-semibold text-center text-[#D4AF37] mb-6">فروعنا</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center"><div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold text-sm">📍 المعادي</p><a href="https://maps.app.goo.gl/VUgKCANN5nTCHcob6" target="_blank" class="text-xs text-[#D4AF37] hover:underline">افتح الخريطة</a></div><div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold text-sm">📍 زهراء المعادي</p><a href="https://maps.app.goo.gl/HVnNiCviR7gHZYCa6" target="_blank" class="text-xs text-[#D4AF37] hover:underline">افتح الخريطة</a></div><div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold text-sm">📍 مدينة نصر</p><a href="https://maps.app.goo.gl/oinSr4eZRo8Xrcex7" target="_blank" class="text-xs text-[#D4AF37] hover:underline">افتح الخريطة</a></div></div></div>
+        <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4"><div class="trust-badge text-center p-3 md:p-4 rounded-xl"><div class="text-2xl md:text-3xl mb-1">🛵</div><h4 class="font-bold text-white text-xs md:text-sm">توصيل سريع</h4><p class="text-[10px] md:text-xs text-gray-400">لباب البيت</p></div><div class="trust-badge text-center p-3 md:p-4 rounded-xl"><div class="text-2xl md:text-3xl mb-1">🔄</div><h4 class="font-bold text-white text-xs md:text-sm">معاينة قبل الاستلام</h4><p class="text-[10px] md:text-xs text-gray-400">اطمئن على الجودة</p></div><div class="trust-badge text-center p-3 md:p-4 rounded-xl col-span-2 md:col-span-1"><div class="text-2xl md:text-3xl mb-1">💬</div><h4 class="font-bold text-white text-xs md:text-sm">دعم مباشر</h4><p class="text-[10px] md:text-xs text-gray-400">تواصل واتساب</p></div></div>
+        <div class="text-[10px] md:text-xs text-gray-600 border-t border-gray-800 pt-6 mt-10 text-center pb-4">© 2026 Pantalon</div>
     </main>
-    <!-- سلة -->
     <div id="overlay" class="overlay fixed inset-0 bg-black/70 z-40" onclick="toggleCart()"></div>
-    <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-80 bg-gray-900 z-50 shadow-2xl p-6 flex flex-col border-l border-gray-700">
-        <div class="flex justify-between items-center border-b border-gray-700 pb-4"><h3 class="text-2xl font-bold text-white">🛒 السلة</h3><button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl">&times;</button></div>
-        <div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3"><p class="text-gray-500 text-center">فارغة</p></div>
-        <div class="border-t border-gray-700 pt-4 mt-auto"><div class="flex justify-between text-xl font-bold text-white mb-4"><span>الإجمالي:</span><span id="cartTotal">0 ج.م</span></div><button class="w-full bg-[#D4AF37] hover:bg-[#b8962e] text-black font-bold py-3 rounded-lg transition">إتمام الشراء (تجريبي)</button></div>
-    </div>
+    <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-80 bg-gray-900 z-50 shadow-2xl p-6 flex flex-col border-l border-gray-700"><div class="flex justify-between items-center border-b border-gray-700 pb-4"><h3 class="text-2xl font-bold text-white">🛒 Cart</h3><button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl">&times;</button></div><div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3"><p class="text-gray-500 text-center">Cart is empty</p></div><div class="border-t border-gray-700 pt-4 mt-auto"><div class="flex justify-between text-xl font-bold text-white mb-4"><span>Total:</span><span id="cartTotal">0 EGP</span></div><button onclick="whatsappCheckout()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 shadow-lg shadow-green-900/30"><i class="fab fa-whatsapp text-xl"></i> Order via WhatsApp</button><p class="text-[10px] text-gray-500 text-center mt-2">Smart order message ready</p></div></div>
     <script src="script.js"></script>
     <script>
         window.products = [
-            { id: 8, name: "سويتبانتس رياضي", price: 590, size: "M-XL", color: "رمادي", image: "https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=400&h=500&fit=crop" },
-            { id: 9, name: "سويتبانتس كلاسيك", price: 620, size: "M-XL", color: "أسود", image: "https://images.unsplash.com/photo-1536599018102-9f803c140fc1?w=400&h=500&fit=crop" },
-            { id: 10, name: "سويتبانتس واسح", price: 670, size: "M-XL", color: "بيج", image: "https://images.unsplash.com/photo-1516478177764-9fe0bd37531a?w=400&h=500&fit=crop" }
+            { id: 5, name: "Cargo Sweatpants", category: "sweatpants", price: 690, oldPrice: 850, colors: ["Grey", "Black", "Olive"], sizes: ["M", "L", "XL"], description: "Comfortable cargo sweatpants with multiple pockets.", image: "https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=400&h=500&fit=crop", images: ["https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=600&h=700&fit=crop","https://images.unsplash.com/photo-1536599018102-9f803c140fc1?w=600&h=700&fit=crop"], isBestSeller: true, isNew: false },
+            { id: 6, name: "Essential Sweatpants", category: "sweatpants", price: 590, oldPrice: null, colors: ["Navy", "Grey"], sizes: ["M", "L", "XL"], description: "Minimalist sweatpants with a perfect fit.", image: "https://images.unsplash.com/photo-1536599018102-9f803c140fc1?w=400&h=500&fit=crop", images: ["https://images.unsplash.com/photo-1536599018102-9f803c140fc1?w=600&h=700&fit=crop"], isBestSeller: false, isNew: true }
         ];
-        window.cart = [];
-        renderProducts();
+        window.cart = JSON.parse(localStorage.getItem('pantalon_cart')) || [];
+        renderProducts(window.products, 'productsContainer');
         updateCartUI();
+        document.getElementById('searchInput')?.addEventListener('input', () => renderProducts(window.products, 'productsContainer'));
+        document.getElementById('sizeFilter')?.addEventListener('change', () => renderProducts(window.products, 'productsContainer'));
+        document.getElementById('colorFilter')?.addEventListener('change', () => renderProducts(window.products, 'productsContainer'));
+        document.getElementById('sortFilter')?.addEventListener('change', () => renderProducts(window.products, 'productsContainer'));
     </script>
 </body>
 </html>
