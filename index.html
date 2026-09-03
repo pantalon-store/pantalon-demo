@@ -10,7 +10,7 @@
 </head>
 <body class="bg-black text-white">
 
-    <!-- ====== شريط الإعلانات (Announcement Bar) ====== -->
+    <!-- ====== شريط الإعلانات ====== -->
     <div class="announcement-bar">
         <span>🚚 الشحن متوفر لجميع المحافظات | التوصيل خلال 24-48 ساعة | استمتع بتجربة تسوق فريدة ✨</span>
     </div>
@@ -19,9 +19,9 @@
     <header class="sticky top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-gray-800 px-4 py-3 flex justify-between items-center">
         <h1 class="text-2xl font-bold text-[#D4AF37] tracking-widest">PANTALON</h1>
         <div class="flex items-center gap-4">
-            <a href="jeans.html" class="text-sm hover:text-[#D4AF37] transition">جينز</a>
-            <a href="basics.html" class="text-sm hover:text-[#D4AF37] transition">تيشرتات</a>
-            <a href="sweatpants.html" class="text-sm hover:text-[#D4AF37] transition">سويت بانطس</a>
+            <a href="jeans.html" class="text-sm hover:text-[#D4AF37] transition">Jeans</a>
+            <a href="basics.html" class="text-sm hover:text-[#D4AF37] transition">T-Shirts</a>
+            <a href="sweatpants.html" class="text-sm hover:text-[#D4AF37] transition">Sweatpants</a>
             <button onclick="toggleCart()" class="relative text-white text-2xl hover:text-[#D4AF37] transition">
                 <i class="fas fa-shopping-bag"></i>
                 <span id="cartCount" class="absolute -top-2 -right-3 bg-red-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
@@ -30,25 +30,22 @@
     </header>
 
     <main class="px-4 max-w-7xl mx-auto">
-
         <!-- ====== الهيرو باللوجو ====== -->
         <div class="text-center py-8 border-b border-gray-800 mb-6">
             <img src="https://i.imgur.com/4t6A6KO.jpeg" alt="Pantalon Logo" class="w-64 md:w-96 mx-auto mb-4 drop-shadow-2xl" />
             <p class="text-sm md:text-lg text-gray-400 font-light tracking-[0.3em] uppercase">Elevate Your Style</p>
             <div class="flex flex-wrap justify-center gap-4 mt-6">
-                <a href="jeans.html" class="bg-[#D4AF37] hover:bg-[#b8962e] text-black font-bold px-6 py-2 rounded-full transition text-sm">👖 الجينز</a>
-                <a href="basics.html" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-2 rounded-full transition text-sm">👕 التيشرتات</a>
-                <a href="sweatpants.html" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-2 rounded-full transition text-sm">🩳 سويت بانطس</a>
+                <a href="jeans.html" class="bg-[#D4AF37] hover:bg-[#b8962e] text-black font-bold px-6 py-2 rounded-full transition text-sm">👖 Jeans</a>
+                <a href="basics.html" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-2 rounded-full transition text-sm">👕 T-Shirts</a>
+                <a href="sweatpants.html" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-2 rounded-full transition text-sm">🩳 Sweatpants</a>
             </div>
         </div>
 
-        <!-- ====== قسم المنتجات المميزة (أحدث الكولكشنات) ====== -->
+        <!-- ====== قسم المنتجات المميزة ====== -->
         <section>
-            <h2 class="text-3xl font-bold text-[#D4AF37] text-center mb-2">✨ أحدث الكولكشنات</h2>
-            <p class="text-center text-gray-400 text-sm mb-6">أشهر المنتجات اللي عملاءنا بيحبوها</p>
-            <div id="featuredContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- هتتعبأ عن طريق script.js -->
-            </div>
+            <h2 class="text-3xl font-bold text-[#D4AF37] text-center mb-2">✨ New Arrivals</h2>
+            <p class="text-center text-gray-400 text-sm mb-6">Our customers' favorite picks</p>
+            <div id="featuredContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </section>
 
         <!-- ====== الفروع ====== -->
@@ -61,7 +58,7 @@
             </div>
         </div>
 
-        <!-- ====== شارات الثقة (Trust Badges) ====== -->
+        <!-- ====== شارات الثقة ====== -->
         <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div class="trust-badge text-center p-4 rounded-xl">
                 <div class="text-3xl mb-2">🛵</div>
@@ -83,7 +80,7 @@
         <div class="text-xs text-gray-600 border-t border-gray-800 pt-6 mt-10 text-center pb-4">© 2026 Pantalon. All Rights Reserved.</div>
     </main>
 
-    <!-- ====== عربة التسوق (مع زرار واتساب) ====== -->
+    <!-- ====== عربة التسوق ====== -->
     <div id="overlay" class="overlay fixed inset-0 bg-black/70 z-40" onclick="toggleCart()"></div>
     <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-80 bg-gray-900 z-50 shadow-2xl p-6 flex flex-col border-l border-gray-700">
         <div class="flex justify-between items-center border-b border-gray-700 pb-4">
@@ -92,11 +89,7 @@
         </div>
         <div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3"><p class="text-gray-500 text-center">فارغة</p></div>
         <div class="border-t border-gray-700 pt-4 mt-auto">
-            <div class="flex justify-between text-xl font-bold text-white mb-4">
-                <span>الإجمالي:</span>
-                <span id="cartTotal">0 ج.م</span>
-            </div>
-            <!-- زر واتساب الجديد -->
+            <div class="flex justify-between text-xl font-bold text-white mb-4"><span>الإجمالي:</span><span id="cartTotal">0 ج.م</span></div>
             <button onclick="whatsappCheckout()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 shadow-lg shadow-green-900/30">
                 <i class="fab fa-whatsapp text-xl"></i> إتمام الطلب عبر واتساب
             </button>
