@@ -1,328 +1,183 @@
-// =============================================
-// PLACEHOLDER GENERATOR
-// =============================================
-function createPlaceholderSVG(name, category = 'PRODUCT') {
-    const cleanName = name || 'PANTALON';
-    return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient><pattern id="tex" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="none" stroke="#222" stroke-width="0.5"/></pattern></defs><rect width="400" height="500" fill="url(#bg)"/><rect width="400" height="500" fill="url(#tex)"/><text x="200" y="200" font-family="'Helvetica Neue', sans-serif" font-size="28" font-weight="900" fill="${encodeURIComponent('#D4AF37')}" text-anchor="middle" letter-spacing="8">PANTALON</text><text x="200" y="250" font-family="'Helvetica Neue', sans-serif" font-size="14" font-weight="300" fill="${encodeURIComponent('#888')}" text-anchor="middle" letter-spacing="6">${category.toUpperCase()}</text><line x1="60" y1="280" x2="340" y2="280" stroke="${encodeURIComponent('#333')}" stroke-width="1"/><text x="200" y="330" font-family="'Helvetica Neue', sans-serif" font-size="20" font-weight="600" fill="${encodeURIComponent('#aaa')}" text-anchor="middle" letter-spacing="4">${cleanName.toUpperCase()}</text></svg>`;
-}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalon - Jeans</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { background: #F5F4F0; color: #111; }
+        .navbar { background: #0B0B0B; border-bottom: 1px solid #D9D6CC; }
+        .navbar a { color: #F5F4F0; transition: 0.3s; }
+        .navbar a:hover { color: #D4AF37; }
+        .hero { background: #F5F4F0; text-align: center; padding: 30px 0; border-bottom: 1px solid #D9D6CC; }
+        .hero h1 { color: #D4AF37; font-size: clamp(3rem, 10vw, 5rem); font-weight: 900; letter-spacing: 0.1em; }
+        .hero p { color: #666; letter-spacing: 0.2em; }
+        .marquee { background: #0B0B0B; color: #D4AF37; padding: 12px 0; overflow: hidden; white-space: nowrap; border-top: 1px solid #222; border-bottom: 1px solid #222; }
+        .marquee span { display: inline-block; animation: marqueeScroll 25s linear infinite; margin: 0 20px; }
+        @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .product-card { background: #0B0B0B; border: 1px solid #2a2a2a; border-radius: 16px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+        .product-card:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 40px -12px rgba(0,0,0,0.8); border-color: #D4AF37; }
+        .filter-select, .search-bar { background: white; border: 1px solid #D9D6CC; border-radius: 8px; padding: 8px 12px; color: #111; transition: 0.3s; }
+        .filter-select:focus, .search-bar:focus { border-color: #D4AF37; outline: none; box-shadow: 0 0 0 2px rgba(212,175,55,0.1); }
+        .trust-badge { background: #0B0B0B; border: 1px solid #2a2a2a; padding: 16px; border-radius: 12px; text-align: center; transition: 0.3s; }
+        .trust-badge:hover { border-color: #D4AF37; }
+        .trust-badge h4 { color: #F5F4F0; }
+        .trust-badge p { color: #666; font-size: 12px; }
+        .branch-card { background: #0B0B0B; border: 1px solid #2a2a2a; padding: 16px; border-radius: 12px; text-align: center; }
+        .branch-card p { color: #F5F4F0; font-weight: bold; }
+        .branch-card a { color: #D4AF37; font-size: 12px; text-decoration: none; }
+        .branch-card a:hover { text-decoration: underline; }
+        .cart-sidebar { background: #0B0B0B; border-left: 1px solid #D4AF37; }
+        .cart-sidebar h3 { color: #F5F4F0; }
+        .cart-sidebar .total { color: #F5F4F0; }
+        .mobile-menu { background: #0B0B0B; padding: 20px; border-top: 1px solid #333; }
+        .mobile-menu a { color: #F5F4F0; }
+        .mobile-menu a:hover { color: #D4AF37; }
+        #loader { position: fixed; inset: 0; background: #0B0B0B; display: flex; align-items: center; justify-content: center; z-index: 9999; transition: 0.6s; }
+        #loader.fade-out { opacity: 0; visibility: hidden; }
+        .loader-text { font-size: clamp(2.5rem, 10vw, 5rem); color: #D4AF37; font-weight: 900; letter-spacing: 0.15em; }
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px); background: #0B0B0B; border: 1px solid #D4AF37; color: #D4AF37; padding: 10px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; z-index: 999; opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); pointer-events: none; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0px); }
+        .cart-bounce { animation: cartBounce 0.4s ease; }
+        @keyframes cartBounce { 0% { transform: scale(1); } 30% { transform: scale(1.3); color: #D4AF37; } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
+        .announcement-bar { background: #0B0B0B; color: #D4AF37; text-align: center; padding: 8px 10px; font-size: 13px; font-weight: 500; border-bottom: 1px solid #D4AF37; overflow: hidden; white-space: nowrap; }
+        .announcement-bar span { display: inline-block; animation: scrollText 20s linear infinite; }
+        @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .filter-group { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        @media (max-width: 640px) { .filter-group { flex-direction: column; align-items: stretch; } }
+    </style>
+</head>
+<body>
 
-// =============================================
-// DATA
-// =============================================
-const allProducts = [
-    { id: 1, name: "Classic Baggy Jeans", category: "jeans", fit: "Baggy", price: 899, oldPrice: 999, colors: ["Black", "Blue", "Grey"], sizes: ["30", "32", "34", "36", "38"], description: "High-quality denim with a relaxed baggy fit.", image: createPlaceholderSVG("Baggy Jeans", "Jeans"), images: [createPlaceholderSVG("Baggy Jeans", "Jeans")], isBestSeller: true, isNew: false },
-    { id: 2, name: "Slim Fit Denim Jeans", category: "jeans", fit: "Slim", price: 750, oldPrice: null, colors: ["Dark Blue", "Black"], sizes: ["30", "32", "34", "36"], description: "Slim fit jeans for a modern silhouette.", image: createPlaceholderSVG("Slim Jeans", "Jeans"), images: [createPlaceholderSVG("Slim Jeans", "Jeans")], isBestSeller: false, isNew: true },
-    { id: 7, name: "Straight Leg Jeans", category: "jeans", fit: "Straight", price: 820, oldPrice: 920, colors: ["Light Blue", "Black"], sizes: ["30", "32", "34"], description: "Classic straight leg jeans for a timeless look.", image: createPlaceholderSVG("Straight Jeans", "Jeans"), images: [createPlaceholderSVG("Straight Jeans", "Jeans")], isBestSeller: false, isNew: true },
-    { id: 9, name: "Wide Leg Denim", category: "jeans", fit: "Wide", price: 940, oldPrice: 1100, colors: ["Black", "Blue"], sizes: ["30", "32", "34", "36"], description: "Bold wide leg denim for a striking streetwear look.", image: createPlaceholderSVG("Wide Leg", "Jeans"), images: [createPlaceholderSVG("Wide Leg", "Jeans")], isBestSeller: false, isNew: true },
-    { id: 3, name: "Oversized T-Shirt", category: "tshirts", fit: null, price: 499, oldPrice: 650, colors: ["White", "Black", "Beige"], sizes: ["M", "L", "XL"], description: "Premium cotton oversized t-shirt.", image: createPlaceholderSVG("Oversized Tee", "T-Shirt"), images: [createPlaceholderSVG("Oversized Tee", "T-Shirt")], isBestSeller: true, isNew: false },
-    { id: 4, name: "Classic Black T-Shirt", category: "tshirts", fit: null, price: 350, oldPrice: null, colors: ["Black"], sizes: ["M", "L", "XL"], description: "The perfect classic black tee.", image: createPlaceholderSVG("Black Tee", "T-Shirt"), images: [createPlaceholderSVG("Black Tee", "T-Shirt")], isBestSeller: false, isNew: true },
-    { id: 8, name: "Beige Oversized Tee", category: "tshirts", fit: null, price: 450, oldPrice: null, colors: ["Beige"], sizes: ["M", "L", "XL"], description: "Premium beige oversized t-shirt.", image: createPlaceholderSVG("Beige Tee", "T-Shirt"), images: [createPlaceholderSVG("Beige Tee", "T-Shirt")], isBestSeller: false, isNew: false },
-    { id: 5, name: "Cargo Sweatpants", category: "sweatpants", fit: null, price: 690, oldPrice: 850, colors: ["Grey", "Black", "Olive"], sizes: ["M", "L", "XL"], description: "Comfortable cargo sweatpants with multiple pockets.", image: createPlaceholderSVG("Cargo Sweat", "Sweatpants"), images: [createPlaceholderSVG("Cargo Sweat", "Sweatpants")], isBestSeller: true, isNew: false },
-    { id: 6, name: "Essential Sweatpants", category: "sweatpants", fit: null, price: 590, oldPrice: null, colors: ["Navy", "Grey"], sizes: ["M", "L", "XL"], description: "Minimalist sweatpants with a perfect fit.", image: createPlaceholderSVG("Essential Sweat", "Sweatpants"), images: [createPlaceholderSVG("Essential Sweat", "Sweatpants")], isBestSeller: false, isNew: true }
-];
+    <div id="loader"><div class="loader-text">PANTALON</div></div>
+    <div id="toast">✓ Added to Cart</div>
 
-let cart = JSON.parse(localStorage.getItem('pantalon_cart')) || [];
-let currentFitFilter = 'All';
+    <div class="announcement-bar"><span>🚚 Free Shipping Across Egypt | Delivery in 24-48 Hours</span></div>
 
-function saveCart() { localStorage.setItem('pantalon_cart', JSON.stringify(cart)); updateCartUI(); }
+    <header class="navbar px-4 py-3 flex items-center justify-between relative">
+        <button onclick="toggleMobile()" class="text-[#F5F4F0] text-2xl hover:text-[#D4AF37] transition block md:hidden">☰</button>
+        <div class="flex-1"></div>
+        <button onclick="toggleCart()" class="relative text-[#F5F4F0] text-2xl hover:text-[#D4AF37] transition" id="cartIcon">
+            <i class="fas fa-shopping-bag"></i>
+            <span id="cartCount" class="absolute -top-2 -right-3 bg-red-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+        </button>
+        <div id="mobileMenu" class="mobile-menu hidden absolute top-full left-0 w-full z-50 flex-col gap-3">
+            <a href="jeans.html">👖 Jeans</a>
+            <a href="basics.html">👕 T-Shirts</a>
+            <a href="sweatpants.html">🩳 Sweatpants</a>
+        </div>
+    </header>
 
-// ===== FILTER BY FIT =====
-function filterFit(fit) {
-    currentFitFilter = fit;
-    document.querySelectorAll('.fit-btn').forEach(b => b.classList.remove('active', 'border-[#D4AF37]', 'text-[#D4AF37]'));
-    const active = document.querySelector(`.fit-btn[data-fit="${fit}"]`);
-    if (active) { active.classList.add('active', 'border-[#D4AF37]', 'text-[#D4AF37]'); }
-    renderProducts(allProducts, 'productsContainer');
-}
+    <nav class="navbar hidden md:flex justify-center gap-8 py-3 text-sm">
+        <a href="jeans.html" class="border-b border-[#D4AF37]">Jeans</a>
+        <a href="basics.html">T-Shirts</a>
+        <a href="sweatpants.html">Sweatpants</a>
+    </nav>
 
-// ===== RENDER PRODUCTS =====
-function renderProducts(productsArray, containerId = 'productsContainer') {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    let display = [...productsArray];
+    <main class="px-4 max-w-7xl mx-auto pb-10" style="background:#F5F4F0;">
 
-    // Fit filter
-    if (currentFitFilter !== 'All' && containerId === 'productsContainer') {
-        display = display.filter(p => p.fit === currentFitFilter);
-    }
+        <div class="hero"><h1>PANTALON</h1><p>WEAR YOUR STYLE.</p></div>
 
-    // Search & filters
-    const searchInput = document.getElementById('searchInput');
-    const categoryFilter = document.getElementById('categoryFilter');
-    const sizeFilter = document.getElementById('sizeFilter');
-    const colorFilter = document.getElementById('colorFilter');
-    const sortFilter = document.getElementById('sortFilter');
+        <div class="marquee"><span>PANTALON • STREETWEAR • DENIM • NEW COLLECTION • PANTALON • STREETWEAR • DENIM • NEW COLLECTION •</span></div>
 
-    if (searchInput) {
-        const q = searchInput.value.toLowerCase();
-        if (q) display = display.filter(p => p.name.toLowerCase().includes(q) || p.category.includes(q));
-    }
-    if (categoryFilter && categoryFilter.value && categoryFilter.value !== '') {
-        display = display.filter(p => p.category === categoryFilter.value);
-    }
-    if (sizeFilter && sizeFilter.value) {
-        display = display.filter(p => p.sizes.includes(sizeFilter.value));
-    }
-    if (colorFilter && colorFilter.value) {
-        display = display.filter(p => p.colors.some(c => c.toLowerCase().includes(colorFilter.value.toLowerCase())));
-    }
-    if (sortFilter && sortFilter.value) {
-        if (sortFilter.value === 'newest') display.sort((a,b) => (a.isNew===b.isNew)?0:a.isNew?-1:1);
-        else if (sortFilter.value === 'price-low') display.sort((a,b) => a.price - b.price);
-        else if (sortFilter.value === 'price-high') display.sort((a,b) => b.price - a.price);
-    }
+        <h2 class="text-3xl md:text-4xl font-bold text-[#111] text-center mb-2">👖 Jeans Collection</h2>
+        <p class="text-center text-[#666] mb-6">Sizes from 30 to 38</p>
 
-    if (display.length === 0) {
-        container.innerHTML = `<p class="text-center text-[#666] col-span-full py-10">No products found.</p>`;
-        return;
-    }
-
-    container.innerHTML = display.map(p => {
-        const discount = p.oldPrice ? Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100) : 0;
-        let badge = '';
-        if (p.isBestSeller) badge = `<span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full z-10">🔥 BEST SELLER</span>`;
-        else if (p.isNew) badge = `<span class="absolute top-3 left-3 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-full z-10">✨ NEW</span>`;
-
-        return `
-        <div class="product-card relative group">
-            ${badge}
-            <div onclick="window.location.href='product.html?id=${p.id}'" class="cursor-pointer relative aspect-[3/4] overflow-hidden">
-                <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-            </div>
-            <div class="p-3 md:p-4">
-                <div onclick="window.location.href='product.html?id=${p.id}'" class="cursor-pointer">
-                    <h4 class="text-sm md:text-lg font-bold text-[#F5F4F0] group-hover:text-[#D4AF37] transition">${p.name}</h4>
-                    <div class="flex items-center gap-2 mt-1">
-                        <span class="text-base md:text-xl font-bold text-[#D4AF37]">${p.price} EGP</span>
-                        ${p.oldPrice ? `<span class="text-xs text-[#666] line-through">${p.oldPrice} EGP</span>` : ''}
-                        ${discount > 0 ? `<span class="text-[10px] text-green-400 font-bold">-${discount}%</span>` : ''}
-                    </div>
-                    <div class="flex items-center gap-1 mt-2 flex-wrap">${p.colors.map(c => `<span class="w-3 h-3 md:w-4 md:h-4 rounded-full border border-gray-600 inline-block" style="background-color: ${c.toLowerCase()==='black'?'#111':c.toLowerCase()==='white'?'#fff':c.toLowerCase()==='blue'?'#2563eb':c.toLowerCase()==='grey'?'#6b7280':c.toLowerCase()==='beige'?'#f5f5dc':c.toLowerCase()==='olive'?'#556b2f':c.toLowerCase()==='navy'?'#0a192f':c.toLowerCase()==='dark blue'?'#1e3a8a':c.toLowerCase()==='light blue'?'#93c5fd':'#ccc'}"></span>`).join('')}</div>
-                    <div class="flex items-center gap-2 mt-2">
-                        <select id="size_${p.id}" class="filter-select text-xs py-1 px-2">${p.sizes.map(s => `<option value="${s}">${s}</option>`).join('')}</select>
-                        <select id="color_${p.id}" class="filter-select text-xs py-1 px-2">${p.colors.map(c => `<option value="${c}">${c}</option>`).join('')}</select>
-                    </div>
-                </div>
-                <div class="hover-actions mt-3 flex flex-col gap-2">
-                    <button onclick="quickAdd(${p.id})" class="w-full bg-[#D4AF37] hover:bg-[#b8962e] text-[#0B0B0B] font-bold py-2 rounded-full transition text-xs md:text-sm"><i class="fas fa-plus"></i> QUICK ADD</button>
-                </div>
+        <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between bg-white/50 p-4 rounded-2xl border border-[#D9D6CC]">
+            <input id="searchInput" type="text" placeholder="🔍 Search..." class="search-bar text-sm w-full" />
+            <div class="filter-group w-full md:w-auto">
+                <select id="categoryFilter" class="filter-select text-xs w-full md:w-auto"><option value="jeans" selected>Jeans</option></select>
+                <select id="sizeFilter" class="filter-select text-xs w-full md:w-auto">
+                    <option value="">All Sizes</option>
+                    <option value="30">30</option><option value="32">32</option><option value="34">34</option>
+                    <option value="36">36</option><option value="38">38</option>
+                </select>
+                <select id="colorFilter" class="filter-select text-xs w-full md:w-auto">
+                    <option value="">All Colors</option>
+                    <option value="Black">Black</option><option value="Blue">Blue</option>
+                    <option value="Grey">Grey</option><option value="Beige">Beige</option>
+                </select>
+                <select id="sortFilter" class="filter-select text-xs w-full md:w-auto">
+                    <option value="newest">Newest</option>
+                    <option value="price-low">Price: Low → High</option>
+                    <option value="price-high">Price: High → Low</option>
+                </select>
             </div>
         </div>
-    `}).join('');
-}
 
-// ===== QUICK ADD =====
-function quickAdd(productId) {
-    const product = allProducts.find(p => p.id === productId);
-    if (!product) return;
-    const size = document.getElementById(`size_${productId}`)?.value || product.sizes[0];
-    const color = document.getElementById(`color_${productId}`)?.value || product.colors[0];
-    const existing = cart.find(i => i.id === productId && i.size === size && i.color === color);
-    if (existing) existing.quantity += 1;
-    else cart.push({ ...product, size, color, quantity: 1 });
-    saveCart();
-    bounceCartIcon();
-    showToast(`✓ ${product.name} added!`);
-}
+        <div id="productsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
 
-// ===== CART FUNCTIONS =====
-function removeFromCart(idx) { cart.splice(idx,1); saveCart(); }
-function increaseQty(idx) { cart[idx].quantity += 1; saveCart(); }
-function decreaseQty(idx) {
-    if (cart[idx].quantity > 1) cart[idx].quantity -= 1;
-    else cart.splice(idx,1);
-    saveCart();
-}
+        <div class="text-center mt-10"><a href="index.html" class="text-[#666] hover:text-[#111] text-sm"><i class="fas fa-arrow-left"></i> Back to Home</a></div>
 
-function updateCartUI() {
-    const totalItems = cart.reduce((s,i) => s + i.quantity, 0);
-    document.querySelectorAll('#cartCount').forEach(el => el.textContent = totalItems);
-    const container = document.getElementById('cartItems');
-    if (!container) return;
-    if (cart.length === 0) container.innerHTML = `<p class="text-[#666] text-center">Cart is empty</p>`;
-    else {
-        container.innerHTML = cart.map((item, idx) => `
-            <div class="flex items-center gap-3 bg-[#1a1a1a] p-2 rounded-lg border border-[#2a2a2a]">
-                <img src="${item.image}" class="w-12 h-12 rounded object-cover" />
-                <div class="flex-1">
-                    <p class="text-sm font-bold text-[#F5F4F0]">${item.name}</p>
-                    <p class="text-xs text-[#666]">${item.color} | ${item.size}</p>
-                    <p class="text-xs text-[#D4AF37]">${item.price} EGP</p>
-                </div>
-                <div class="flex items-center gap-1">
-                    <button onclick="decreaseQty(${idx})" class="bg-[#2a2a2a] text-[#F5F4F0] w-6 h-6 rounded hover:bg-red-600">-</button>
-                    <span class="text-[#F5F4F0] w-6 text-center">${item.quantity}</span>
-                    <button onclick="increaseQty(${idx})" class="bg-[#2a2a2a] text-[#F5F4F0] w-6 h-6 rounded hover:bg-green-600">+</button>
-                </div>
-                <button onclick="removeFromCart(${idx})" class="text-red-400 hover:text-red-600"><i class="fas fa-trash"></i></button>
-            </div>
-        `).join('');
-    }
-    const total = cart.reduce((s,i) => s + (i.price * i.quantity), 0);
-    document.querySelectorAll('#cartTotal').forEach(el => el.textContent = total.toFixed(2) + ' EGP');
-}
-
-// ===== WHATSAPP =====
-function whatsappCheckout() {
-    if (cart.length === 0) { alert('Your cart is empty!'); return; }
-    let msg = 'Hello Pantalon 👋,%0aI would like to order:%0a';
-    cart.forEach(i => { msg += `• ${i.name} - ${i.color} - ${i.size} - ${i.quantity} x ${i.price} EGP = ${i.price * i.quantity} EGP%0a`; });
-    const total = cart.reduce((s,i) => s + (i.price * i.quantity), 0);
-    msg += `%0aTotal: ${total.toFixed(2)} EGP%0a%0aName: [ ]%0aPhone: [ ]%0aAddress: [ ]`;
-    window.open(`https://wa.me/201080787739?text=${msg}`, '_blank');
-}
-
-// ===== PRODUCT DETAIL =====
-function renderProductDetail(id) {
-    const product = allProducts.find(p => p.id === id);
-    if (!product) {
-        document.getElementById('productDetail').innerHTML = '<p class="text-center text-[#666] py-20">Product not found.</p>';
-        return;
-    }
-    const discount = product.oldPrice ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100) : 0;
-    const gallery = product.images.map((img, i) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-[#D4AF37] transition" onclick="changeMainImage(this.src)" />`).join('');
-
-    document.getElementById('productDetail').innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-                <img id="mainImage" src="${product.images[0]}" class="w-full h-72 md:h-96 object-cover rounded-2xl border border-[#2a2a2a]" />
-                <div class="flex gap-2 mt-4 overflow-x-auto pb-2">${gallery}</div>
-            </div>
-            <div>
-                <h1 class="text-2xl md:text-3xl font-bold text-[#111]">${product.name}</h1>
-                <div class="flex items-center gap-3 mt-2">
-                    <span class="text-2xl font-bold text-[#D4AF37]">${product.price} EGP</span>
-                    ${product.oldPrice ? `<span class="text-lg text-[#666] line-through">${product.oldPrice} EGP</span>` : ''}
-                    ${discount > 0 ? `<span class="bg-green-500 text-white text-sm font-bold px-2 py-1 rounded">-${discount}%</span>` : ''}
-                </div>
-                <p class="text-[#666] mt-4 text-sm leading-relaxed">${product.description}</p>
-
-                <div class="mt-6">
-                    <label class="text-sm text-[#666] block mb-2">Color:</label>
-                    <div class="flex gap-2 flex-wrap" id="colorOptions">
-                        ${product.colors.map(c => `<button onclick="selectColor(this, '${c}')" class="px-4 py-2 border border-[#D9D6CC] rounded-full text-xs hover:border-[#D4AF37] transition">${c}</button>`).join('')}
-                    </div>
-                </div>
-
-                <div class="mt-4">
-                    <label class="text-sm text-[#666] block mb-2">Size:</label>
-                    <div class="flex gap-2 flex-wrap" id="sizeOptions">
-                        ${product.sizes.map(s => `<button onclick="selectSize(this, '${s}')" class="px-4 py-2 border border-[#D9D6CC] rounded-full text-xs hover:border-[#D4AF37] transition">${s}</button>`).join('')}
-                    </div>
-                </div>
-
-                <button onclick="addToCartDetail(${product.id})" class="w-full mt-6 bg-[#D4AF37] hover:bg-[#b8962e] text-[#0B0B0B] font-bold py-3 rounded-full transition flex items-center justify-center gap-2">
-                    <i class="fas fa-cart-plus"></i> Add to Cart
-                </button>
-                <p id="detailError" class="text-red-400 text-xs mt-2 text-center hidden">⚠️ Please select a color and size first!</p>
+        <!-- BRANCHES & TRUST BADGES -->
+        <div class="mt-16 border-t border-[#D9D6CC] pt-10">
+            <h2 class="text-xl md:text-2xl font-semibold text-center text-[#111] mb-6">فروعنا</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="branch-card"><p>📍 المعادي</p><a href="https://maps.app.goo.gl/VUgKCANN5nTCHcob6" target="_blank">افتح الخريطة</a></div>
+                <div class="branch-card"><p>📍 زهراء المعادي</p><a href="https://maps.app.goo.gl/HVnNiCviR7gHZYCa6" target="_blank">افتح الخريطة</a></div>
+                <div class="branch-card"><p>📍 مدينة نصر</p><a href="https://maps.app.goo.gl/oinSr4eZRo8Xrcex7" target="_blank">افتح الخريطة</a></div>
             </div>
         </div>
-        <div class="mt-16 border-t border-[#D9D6CC] pt-8">
-            <h3 class="text-2xl font-bold text-[#111] mb-4">✨ You May Also Like</h3>
-            <div id="similarProducts" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+
+        <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+            <div class="trust-badge"><div class="text-2xl md:text-3xl mb-1">🛵</div><h4>توصيل سريع</h4><p>لباب البيت</p></div>
+            <div class="trust-badge"><div class="text-2xl md:text-3xl mb-1">🔄</div><h4>معاينة قبل الاستلام</h4><p>اطمئن على الجودة</p></div>
+            <div class="trust-badge col-span-2 md:col-span-1"><div class="text-2xl md:text-3xl mb-1">💬</div><h4>دعم مباشر</h4><p>تواصل واتساب</p></div>
         </div>
-    `;
 
-    // Similar products
-    const similar = allProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
-    document.getElementById('similarProducts').innerHTML = similar.map(p => `
-        <div onclick="window.location.href='product.html?id=${p.id}'" class="bg-[#0B0B0B] rounded-xl overflow-hidden cursor-pointer hover:scale-105 transition border border-[#2a2a2a]">
-            <img src="${p.image}" class="w-full h-36 md:h-48 object-cover" />
-            <div class="p-2 md:p-3"><h4 class="text-xs md:text-sm font-bold text-[#F5F4F0]">${p.name}</h4><p class="text-[#D4AF37] font-bold text-sm">${p.price} EGP</p></div>
+        <div class="text-center text-[#666] text-sm border-t border-[#D9D6CC] pt-6 mt-10">© 2026 Pantalon</div>
+    </main>
+
+    <div id="overlay" class="fixed inset-0 bg-black/70 z-40 hidden" onclick="toggleCart()"></div>
+    <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-80 z-50 shadow-2xl p-6 flex flex-col transition-transform duration-300 translate-x-full">
+        <div class="flex justify-between items-center border-b border-[#2a2a2a] pb-4">
+            <h3 class="text-2xl font-bold">🛒 Cart</h3>
+            <button onclick="toggleCart()" class="text-[#666] hover:text-[#F5F4F0] text-2xl">&times;</button>
         </div>
-    `).join('');
+        <div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3"><p class="text-[#666] text-center">Cart is empty</p></div>
+        <div class="border-t border-[#2a2a2a] pt-4 mt-auto">
+            <div class="flex justify-between text-xl font-bold text-[#F5F4F0] mb-4"><span>Total:</span><span id="cartTotal">0 EGP</span></div>
+            <button onclick="whatsappCheckout()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2"><i class="fab fa-whatsapp text-xl"></i> Order via WhatsApp</button>
+            <p class="text-[10px] text-[#666] text-center mt-2">Smart order message ready</p>
+        </div>
+    </div>
 
-    // Auto-select first color and size
-    window._detailColor = null; window._detailSize = null;
-    const firstColor = document.querySelector('#colorOptions button');
-    if (firstColor) { firstColor.classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/10'); window._detailColor = product.colors[0]; }
-    const firstSize = document.querySelector('#sizeOptions button');
-    if (firstSize) { firstSize.classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/10'); window._detailSize = product.sizes[0]; }
-}
-
-// ===== DETAIL HELPERS =====
-function changeMainImage(src) { document.getElementById('mainImage').src = src; }
-
-function selectColor(el, color) {
-    document.querySelectorAll('#colorOptions button').forEach(b => b.classList.remove('border-[#D4AF37]', 'bg-[#D4AF37]/10'));
-    el.classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/10');
-    window._detailColor = color;
-    document.getElementById('detailError')?.classList.add('hidden');
-}
-
-function selectSize(el, size) {
-    document.querySelectorAll('#sizeOptions button').forEach(b => b.classList.remove('border-[#D4AF37]', 'bg-[#D4AF37]/10'));
-    el.classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/10');
-    window._detailSize = size;
-    document.getElementById('detailError')?.classList.add('hidden');
-}
-
-function addToCartDetail(productId) {
-    const product = allProducts.find(p => p.id === productId);
-    if (!product) return;
-
-    if (!window._detailColor || !window._detailSize) {
-        const err = document.getElementById('detailError');
-        if (err) { err.classList.remove('hidden'); err.textContent = '⚠️ Please select a color and size first!'; }
-        return;
-    }
-
-    const existing = cart.find(i => i.id === productId && i.size === window._detailSize && i.color === window._detailColor);
-    if (existing) existing.quantity += 1;
-    else cart.push({ ...product, size: window._detailSize, color: window._detailColor, quantity: 1 });
-    saveCart();
-    bounceCartIcon();
-    showToast(`✓ ${product.name} added!`);
-}
-
-// ===== BOOT =====
-document.addEventListener('DOMContentLoaded', function() {
-    // Render sections
-    if (document.getElementById('featuredContainer')) {
-        renderProducts(allProducts.filter(p => p.isBestSeller || p.isNew).slice(0,4), 'featuredContainer');
-    }
-    if (document.getElementById('newArrivalsContainer')) {
-        renderProducts(allProducts.filter(p => p.isNew).slice(0,4), 'newArrivalsContainer');
-    }
-    if (document.getElementById('bestSellersContainer')) {
-        renderProducts(allProducts.filter(p => p.isBestSeller).slice(0,4), 'bestSellersContainer');
-    }
-    if (document.getElementById('productsContainer') && !document.getElementById('featuredContainer')) {
-        const path = window.location.pathname;
-        let cat = null;
-        if (path.includes('jeans')) cat = 'jeans';
-        else if (path.includes('basics')) cat = 'tshirts';
-        else if (path.includes('sweatpants')) cat = 'sweatpants';
-        const source = cat ? allProducts.filter(p => p.category === cat) : allProducts;
-        renderProducts(source, 'productsContainer');
-    }
-    if (document.getElementById('productDetail')) {
-        const id = parseInt(new URLSearchParams(window.location.search).get('id'));
-        if (id) renderProductDetail(id);
-    }
-    updateCartUI();
-
-    // Bind filters
-    const searchInput = document.getElementById('searchInput');
-    const categoryFilter = document.getElementById('categoryFilter');
-    const sizeFilter = document.getElementById('sizeFilter');
-    const colorFilter = document.getElementById('colorFilter');
-    const sortFilter = document.getElementById('sortFilter');
-    const applyFilters = () => {
-        const container = document.getElementById('productsContainer');
-        if (container) {
-            const path = window.location.pathname;
-            let cat = null;
-            if (path.includes('jeans')) cat = 'jeans';
-            else if (path.includes('basics')) cat = 'tshirts';
-            else if (path.includes('sweatpants')) cat = 'sweatpants';
-            const source = cat ? allProducts.filter(p => p.category === cat) : allProducts;
-            renderProducts(source, 'productsContainer');
+    <script>
+        function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('translate-x-full');
+            document.getElementById('overlay').classList.toggle('hidden');
         }
-    };
-    if (searchInput) searchInput.addEventListener('input', applyFilters);
-    if (categoryFilter) categoryFilter.addEventListener('change', applyFilters);
-    if (sizeFilter) sizeFilter.addEventListener('change', applyFilters);
-    if (colorFilter) colorFilter.addEventListener('change', applyFilters);
-    if (sortFilter) sortFilter.addEventListener('change', applyFilters);
-});
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+        function bounceCartIcon() {
+            const icon = document.getElementById('cartIcon');
+            if (icon) { icon.classList.remove('cart-bounce'); void icon.offsetWidth; icon.classList.add('cart-bounce'); }
+        }
+        setTimeout(() => { document.getElementById('loader').classList.add('fade-out'); }, 800);
+    </script>
+    <script src="script.js"></script>
+    <script>
+        window.products = [
+            { id: 1, name: "Classic Baggy Jeans", category: "jeans", fit: "Baggy", price: 899, oldPrice: 999, colors: ["Black", "Blue", "Grey"], sizes: ["30", "32", "34", "36", "38"], description: "High-quality denim with a relaxed baggy fit.", image: createPlaceholderSVG("Baggy Jeans", "Jeans"), images: [createPlaceholderSVG("Baggy Jeans", "Jeans")], isBestSeller: true, isNew: false },
+            { id: 2, name: "Slim Fit Denim Jeans", category: "jeans", fit: "Slim", price: 750, oldPrice: null, colors: ["Dark Blue", "Black"], sizes: ["30", "32", "34", "36"], description: "Slim fit jeans for a modern silhouette.", image: createPlaceholderSVG("Slim Jeans", "Jeans"), images: [createPlaceholderSVG("Slim Jeans", "Jeans")], isBestSeller: false, isNew: true },
+            { id: 7, name: "Straight Leg Jeans", category: "jeans", fit: "Straight", price: 820, oldPrice: 920, colors: ["Light Blue", "Black"], sizes: ["30", "32", "34"], description: "Classic straight leg jeans for a timeless look.", image: createPlaceholderSVG("Straight Jeans", "Jeans"), images: [createPlaceholderSVG("Straight Jeans", "Jeans")], isBestSeller: false, isNew: true },
+            { id: 9, name: "Wide Leg Denim", category: "jeans", fit: "Wide", price: 940, oldPrice: 1100, colors: ["Black", "Blue"], sizes: ["30", "32", "34", "36"], description: "Bold wide leg denim for a striking streetwear look.", image: createPlaceholderSVG("Wide Leg", "Jeans"), images: [createPlaceholderSVG("Wide Leg", "Jeans")], isBestSeller: false, isNew: true }
+        ];
+        window.cart = JSON.parse(localStorage.getItem('pantalon_cart')) || [];
+        renderProducts(window.products, 'productsContainer');
+        updateCartUI();
+        ['searchInput','categoryFilter','sizeFilter','colorFilter','sortFilter'].forEach(id => {
+            document.getElementById(id)?.addEventListener('input', () => renderProducts(window.products, 'productsContainer'));
+        });
+    </script>
+</body>
+</html>
