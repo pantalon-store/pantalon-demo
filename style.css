@@ -1,4 +1,4 @@
-/* تنسيق شريط الإعلانات */
+/* شريط الإعلانات */
 .announcement-bar {
     background: linear-gradient(90deg, #1a1a2e, #16213e, #0f3460);
     color: #D4AF37;
@@ -19,7 +19,7 @@
     0% { transform: translateX(100%); }
     100% { transform: translateX(-100%); }
 }
-/* تنسيق شارات الثقة */
+/* شارات الثقة */
 .trust-badge {
     background: #1a1a1a;
     border: 1px solid #2a2a2a;
@@ -29,7 +29,7 @@
     border-color: #D4AF37;
     transform: translateY(-3px);
 }
-/* تنسيق محدد المقاسات */
+/* محدد المقاسات */
 .size-select {
     background: #2a2a2a;
     color: white;
@@ -43,7 +43,7 @@
 .size-select:focus {
     border-color: #D4AF37;
 }
-/* حركات عربية التسوق (موجودة قديماً) */
+/* حركات عربية التسوق */
 .cart-sidebar {
     transition: 0.3s ease-in-out;
     transform: translateX(100%);
