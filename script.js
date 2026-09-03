@@ -1,18 +1,19 @@
 // =============================================
-// PLACEHOLDER GENERATOR (شيك من غير صور)
+// PLACEHOLDER GENERATOR (محسّن لمنع التداخل)
 // =============================================
 function createPlaceholderSVG(name, category = 'PRODUCT') {
     const cleanName = name || 'PANTALON';
-    return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#141414"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient><pattern id="tex" width="30" height="30" patternUnits="userSpaceOnUse"><rect width="30" height="30" fill="none" stroke="#222" stroke-width="0.5"/></pattern></defs><rect width="400" height="500" fill="url(#bg)"/><rect width="400" height="500" fill="url(#tex)"/><text x="200" y="210" font-family="'Helvetica Neue', sans-serif" font-size="26" font-weight="900" fill="${encodeURIComponent('#D4AF37')}" text-anchor="middle" letter-spacing="6">PANTALON</text><text x="200" y="255" font-family="'Helvetica Neue', sans-serif" font-size="12" font-weight="300" fill="${encodeURIComponent('#666')}" text-anchor="middle" letter-spacing="4">${category.toUpperCase()}</text><line x1="80" y1="280" x2="320" y2="280" stroke="${encodeURIComponent('#2a2a2a')}" stroke-width="1"/><text x="200" y="320" font-family="'Helvetica Neue', sans-serif" font-size="16" font-weight="500" fill="${encodeURIComponent('#888')}" text-anchor="middle" letter-spacing="2">${cleanName.toUpperCase()}</text></svg>`;
+    return `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a1a1a"/><stop offset="100%" stop-color="#0a0a0a"/></linearGradient><pattern id="tex" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="none" stroke="#222" stroke-width="0.5"/></pattern></defs><rect width="400" height="500" fill="url(#bg)"/><rect width="400" height="500" fill="url(#tex)"/><text x="200" y="200" font-family="'Helvetica Neue', sans-serif" font-size="28" font-weight="900" fill="${encodeURIComponent('#D4AF37')}" text-anchor="middle" letter-spacing="8">PANTALON</text><text x="200" y="250" font-family="'Helvetica Neue', sans-serif" font-size="14" font-weight="300" fill="${encodeURIComponent('#888')}" text-anchor="middle" letter-spacing="6">${category.toUpperCase()}</text><line x1="60" y1="280" x2="340" y2="280" stroke="${encodeURIComponent('#333')}" stroke-width="1"/><text x="200" y="330" font-family="'Helvetica Neue', sans-serif" font-size="20" font-weight="600" fill="${encodeURIComponent('#aaa')}" text-anchor="middle" letter-spacing="4">${cleanName.toUpperCase()}</text></svg>`;
 }
 
 // =============================================
-// DATA (كل المنتجات مع Fit و Placeholder)
+// DATA (كل المنتجات مع Fit)
 // =============================================
 const allProducts = [
     { id: 1, name: "Classic Baggy Jeans", category: "jeans", fit: "Baggy", price: 899, oldPrice: 999, colors: ["Black", "Blue", "Grey"], sizes: ["30", "32", "34", "36", "38"], description: "High-quality denim with a relaxed baggy fit.", image: createPlaceholderSVG("Baggy Jeans", "Jeans"), images: [createPlaceholderSVG("Baggy Jeans", "Jeans")], isBestSeller: true, isNew: false },
     { id: 2, name: "Slim Fit Denim Jeans", category: "jeans", fit: "Slim", price: 750, oldPrice: null, colors: ["Dark Blue", "Black"], sizes: ["30", "32", "34", "36"], description: "Slim fit jeans for a modern silhouette.", image: createPlaceholderSVG("Slim Jeans", "Jeans"), images: [createPlaceholderSVG("Slim Jeans", "Jeans")], isBestSeller: false, isNew: true },
     { id: 7, name: "Straight Leg Jeans", category: "jeans", fit: "Straight", price: 820, oldPrice: 920, colors: ["Light Blue", "Black"], sizes: ["30", "32", "34"], description: "Classic straight leg jeans for a timeless look.", image: createPlaceholderSVG("Straight Jeans", "Jeans"), images: [createPlaceholderSVG("Straight Jeans", "Jeans")], isBestSeller: false, isNew: true },
+    { id: 9, name: "Wide Leg Denim", category: "jeans", fit: "Wide", price: 940, oldPrice: 1100, colors: ["Black", "Blue"], sizes: ["30", "32", "34", "36"], description: "Bold wide leg denim for a striking streetwear look.", image: createPlaceholderSVG("Wide Leg", "Jeans"), images: [createPlaceholderSVG("Wide Leg", "Jeans")], isBestSeller: false, isNew: true },
     // T-Shirts (No fit)
     { id: 3, name: "Oversized T-Shirt", category: "tshirts", fit: null, price: 499, oldPrice: 650, colors: ["White", "Black", "Beige"], sizes: ["M", "L", "XL"], description: "Premium cotton oversized t-shirt.", image: createPlaceholderSVG("Oversized Tee", "T-Shirt"), images: [createPlaceholderSVG("Oversized Tee", "T-Shirt")], isBestSeller: true, isNew: false },
     { id: 4, name: "Classic Black T-Shirt", category: "tshirts", fit: null, price: 350, oldPrice: null, colors: ["Black"], sizes: ["M", "L", "XL"], description: "The perfect classic black tee.", image: createPlaceholderSVG("Black Tee", "T-Shirt"), images: [createPlaceholderSVG("Black Tee", "T-Shirt")], isBestSeller: false, isNew: true },
@@ -21,9 +22,6 @@ const allProducts = [
     { id: 5, name: "Cargo Sweatpants", category: "sweatpants", fit: null, price: 690, oldPrice: 850, colors: ["Grey", "Black", "Olive"], sizes: ["M", "L", "XL"], description: "Comfortable cargo sweatpants with multiple pockets.", image: createPlaceholderSVG("Cargo Sweat", "Sweatpants"), images: [createPlaceholderSVG("Cargo Sweat", "Sweatpants")], isBestSeller: true, isNew: false },
     { id: 6, name: "Essential Sweatpants", category: "sweatpants", fit: null, price: 590, oldPrice: null, colors: ["Navy", "Grey"], sizes: ["M", "L", "XL"], description: "Minimalist sweatpants with a perfect fit.", image: createPlaceholderSVG("Essential Sweat", "Sweatpants"), images: [createPlaceholderSVG("Essential Sweat", "Sweatpants")], isBestSeller: false, isNew: true }
 ];
-
-// Add a fake Wide Leg product for demo
-allProducts.push({ id: 9, name: "Wide Leg Denim", category: "jeans", fit: "Wide", price: 940, oldPrice: 1100, colors: ["Black", "Blue"], sizes: ["30", "32", "34", "36"], description: "Bold wide leg denim for a striking streetwear look.", image: createPlaceholderSVG("Wide Leg", "Jeans"), images: [createPlaceholderSVG("Wide Leg", "Jeans")], isBestSeller: false, isNew: true });
 
 let cart = JSON.parse(localStorage.getItem('pantalon_cart')) || [];
 let currentFitFilter = 'All';
@@ -35,7 +33,6 @@ function saveCart() { localStorage.setItem('pantalon_cart', JSON.stringify(cart)
 // =============================================
 function filterByFit(fit) {
     currentFitFilter = fit;
-    // Update button active state
     document.querySelectorAll('.fit-btn').forEach(btn => btn.classList.remove('active'));
     const activeBtn = document.querySelector(`.fit-btn[data-fit="${fit}"]`);
     if (activeBtn) activeBtn.classList.add('active');
@@ -51,8 +48,8 @@ function renderProducts(productsArray, containerId = 'productsContainer') {
 
     let displayProducts = [...productsArray];
 
-    // Apply Fit Filter (if not 'All')
-    if (currentFitFilter !== 'All' && containerId === 'productsContainer') {
+    // Apply Fit Filter (if not 'All' and not in special containers)
+    if (currentFitFilter !== 'All' && containerId === 'productsContainer' && !containerId.includes('newArrivals') && !containerId.includes('bestSellers')) {
         displayProducts = displayProducts.filter(p => p.fit === currentFitFilter);
     }
 
@@ -67,7 +64,7 @@ function renderProducts(productsArray, containerId = 'productsContainer') {
         const q = searchInput.value.toLowerCase();
         if (q) displayProducts = displayProducts.filter(p => p.name.toLowerCase().includes(q) || p.category.includes(q));
     }
-    if (categoryFilter && categoryFilter.value) {
+    if (categoryFilter && categoryFilter.value && categoryFilter.value !== '') {
         displayProducts = displayProducts.filter(p => p.category === categoryFilter.value);
     }
     if (sizeFilter && sizeFilter.value) {
@@ -98,8 +95,8 @@ function renderProducts(productsArray, containerId = 'productsContainer') {
         return `
             <div class="product-card bg-gray-900 rounded-2xl overflow-hidden shadow-xl transition-all border border-gray-800 relative group">
                 ${badgeHTML}
-                <div onclick="window.location.href='product.html?id=${p.id}'" class="cursor-pointer relative">
-                    <img src="${p.image}" alt="${p.name}" class="w-full h-48 md:h-64 object-cover group-hover:scale-105 transition duration-500" />
+                <div onclick="window.location.href='product.html?id=${p.id}'" class="cursor-pointer relative aspect-[3/4] overflow-hidden">
+                    <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
                 </div>
                 <div class="p-3 md:p-4">
                     <div onclick="window.location.href='product.html?id=${p.id}'" class="cursor-pointer">
@@ -239,12 +236,6 @@ function addToCartDetail(productId) {
 // BOOT / INIT
 // =============================================
 document.addEventListener('DOMContentLoaded', function() {
-    // Remove Loader after 0.8s
-    setTimeout(() => {
-        const loader = document.getElementById('loader');
-        if (loader) loader.classList.add('fade-out');
-    }, 800);
-
     // Render sections
     if (document.getElementById('featuredContainer')) {
         const featured = allProducts.filter(p => p.isBestSeller || p.isNew).slice(0, 4);
