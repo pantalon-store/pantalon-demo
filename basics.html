@@ -16,32 +16,46 @@
         .hero h1 { color: #D4AF37; font-size: clamp(3rem, 10vw, 5rem); font-weight: 900; letter-spacing: 0.1em; }
         .hero p { color: #666; letter-spacing: 0.2em; }
         .marquee { background: #0B0B0B; color: #D4AF37; padding: 12px 0; overflow: hidden; white-space: nowrap; border-top: 1px solid #222; border-bottom: 1px solid #222; }
-        .marquee span { display: inline-block; animation: scroll 20s linear infinite; margin: 0 20px; }
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .card { background: #0B0B0B; border: 1px solid #2a2a2a; border-radius: 16px; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); border-color: #D4AF37; }
-        .card h4 { color: #F5F4F0; }
-        .card .price { color: #D4AF37; }
-        .filter-select, .search-bar { background: white; border: 1px solid #D9D6CC; border-radius: 8px; padding: 8px 12px; color: #111; }
-        .filter-select:focus, .search-bar:focus { border-color: #D4AF37; outline: none; }
+        .marquee span { display: inline-block; animation: marqueeScroll 25s linear infinite; margin: 0 20px; }
+        @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .product-card { background: #0B0B0B; border: 1px solid #2a2a2a; border-radius: 16px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+        .product-card:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 40px -12px rgba(0,0,0,0.8); border-color: #D4AF37; }
+        .filter-select, .search-bar { background: white; border: 1px solid #D9D6CC; border-radius: 8px; padding: 8px 12px; color: #111; transition: 0.3s; }
+        .filter-select:focus, .search-bar:focus { border-color: #D4AF37; outline: none; box-shadow: 0 0 0 2px rgba(212,175,55,0.1); }
         .trust-badge { background: #0B0B0B; border: 1px solid #2a2a2a; padding: 16px; border-radius: 12px; text-align: center; transition: 0.3s; }
         .trust-badge:hover { border-color: #D4AF37; }
         .trust-badge h4 { color: #F5F4F0; }
         .trust-badge p { color: #666; font-size: 12px; }
         .branch-card { background: #0B0B0B; border: 1px solid #2a2a2a; padding: 16px; border-radius: 12px; text-align: center; }
         .branch-card p { color: #F5F4F0; font-weight: bold; }
-        .branch-card a { color: #D4AF37; font-size: 12px; }
+        .branch-card a { color: #D4AF37; font-size: 12px; text-decoration: none; }
+        .branch-card a:hover { text-decoration: underline; }
         .cart-sidebar { background: #0B0B0B; border-left: 1px solid #D4AF37; }
         .cart-sidebar h3 { color: #F5F4F0; }
         .cart-sidebar .total { color: #F5F4F0; }
+        .mobile-menu { background: #0B0B0B; padding: 20px; border-top: 1px solid #333; }
+        .mobile-menu a { color: #F5F4F0; }
+        .mobile-menu a:hover { color: #D4AF37; }
         #loader { position: fixed; inset: 0; background: #0B0B0B; display: flex; align-items: center; justify-content: center; z-index: 9999; transition: 0.6s; }
         #loader.fade-out { opacity: 0; visibility: hidden; }
         .loader-text { font-size: clamp(2.5rem, 10vw, 5rem); color: #D4AF37; font-weight: 900; letter-spacing: 0.15em; }
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px); background: #0B0B0B; border: 1px solid #D4AF37; color: #D4AF37; padding: 10px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; z-index: 999; opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); pointer-events: none; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0px); }
+        .cart-bounce { animation: cartBounce 0.4s ease; }
+        @keyframes cartBounce { 0% { transform: scale(1); } 30% { transform: scale(1.3); color: #D4AF37; } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
+        .announcement-bar { background: #0B0B0B; color: #D4AF37; text-align: center; padding: 8px 10px; font-size: 13px; font-weight: 500; border-bottom: 1px solid #D4AF37; overflow: hidden; white-space: nowrap; }
+        .announcement-bar span { display: inline-block; animation: scrollText 20s linear infinite; }
+        @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .filter-group { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        @media (max-width: 640px) { .filter-group { flex-direction: column; align-items: stretch; } }
     </style>
 </head>
 <body>
+
     <div id="loader"><div class="loader-text">PANTALON</div></div>
-    <div class="announcement-bar">🚚 Free Shipping Across Egypt | Delivery in 24-48 Hours</div>
+    <div id="toast">✓ Added to Cart</div>
+
+    <div class="announcement-bar"><span>🚚 Free Shipping Across Egypt | Delivery in 24-48 Hours</span></div>
 
     <header class="navbar px-4 py-3 flex items-center justify-between relative">
         <button onclick="toggleMobile()" class="text-[#F5F4F0] text-2xl hover:text-[#D4AF37] transition block md:hidden">☰</button>
@@ -50,10 +64,10 @@
             <i class="fas fa-shopping-bag"></i>
             <span id="cartCount" class="absolute -top-2 -right-3 bg-red-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
         </button>
-        <div id="mobileMenu" class="mobile-menu hidden absolute top-full left-0 w-full z-50 flex-col gap-3 bg-[#0B0B0B] p-4 border-t border-[#2a2a2a]">
-            <a href="jeans.html" class="text-[#F5F4F0] hover:text-[#D4AF37]">👖 Jeans</a>
-            <a href="basics.html" class="text-[#F5F4F0] hover:text-[#D4AF37]">👕 T-Shirts</a>
-            <a href="sweatpants.html" class="text-[#F5F4F0] hover:text-[#D4AF37]">🩳 Sweatpants</a>
+        <div id="mobileMenu" class="mobile-menu hidden absolute top-full left-0 w-full z-50 flex-col gap-3">
+            <a href="jeans.html">👖 Jeans</a>
+            <a href="basics.html">👕 T-Shirts</a>
+            <a href="sweatpants.html">🩳 Sweatpants</a>
         </div>
     </header>
 
@@ -64,7 +78,9 @@
     </nav>
 
     <main class="px-4 max-w-7xl mx-auto pb-10" style="background:#F5F4F0;">
+
         <div class="hero"><h1>PANTALON</h1><p>WEAR YOUR STYLE.</p></div>
+
         <div class="marquee"><span>PANTALON • STREETWEAR • DENIM • NEW COLLECTION • PANTALON • STREETWEAR • DENIM • NEW COLLECTION •</span></div>
 
         <h2 class="text-3xl md:text-4xl font-bold text-[#111] text-center mb-2">👕 T-Shirts & Basics</h2>
@@ -92,6 +108,7 @@
         </div>
 
         <div id="productsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
+
         <div class="text-center mt-10"><a href="index.html" class="text-[#666] hover:text-[#111] text-sm"><i class="fas fa-arrow-left"></i> Back to Home</a></div>
 
         <div class="mt-16 border-t border-[#D9D6CC] pt-10">
@@ -108,6 +125,7 @@
             <div class="trust-badge"><div class="text-2xl md:text-3xl mb-1">🔄</div><h4>معاينة قبل الاستلام</h4><p>اطمئن على الجودة</p></div>
             <div class="trust-badge col-span-2 md:col-span-1"><div class="text-2xl md:text-3xl mb-1">💬</div><h4>دعم مباشر</h4><p>تواصل واتساب</p></div>
         </div>
+
         <div class="text-center text-[#666] text-sm border-t border-[#D9D6CC] pt-6 mt-10">© 2026 Pantalon</div>
     </main>
 
@@ -120,14 +138,29 @@
         <div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3"><p class="text-[#666] text-center">Cart is empty</p></div>
         <div class="border-t border-[#2a2a2a] pt-4 mt-auto">
             <div class="flex justify-between text-xl font-bold text-[#F5F4F0] mb-4"><span>Total:</span><span id="cartTotal">0 EGP</span></div>
-            <button onclick="whatsappCheckout()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition"><i class="fab fa-whatsapp"></i> Order via WhatsApp</button>
+            <button onclick="whatsappCheckout()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2"><i class="fab fa-whatsapp text-xl"></i> Order via WhatsApp</button>
+            <p class="text-[10px] text-[#666] text-center mt-2">Smart order message ready</p>
         </div>
     </div>
 
     <script>
         function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
-        function toggleCart() { document.getElementById('cartSidebar').classList.toggle('translate-x-full'); document.getElementById('overlay').classList.toggle('hidden'); }
-        setTimeout(() => document.getElementById('loader').classList.add('fade-out'), 800);
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('translate-x-full');
+            document.getElementById('overlay').classList.toggle('hidden');
+        }
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+        function bounceCartIcon() {
+            const icon = document.getElementById('cartIcon');
+            if (icon) { icon.classList.remove('cart-bounce'); void icon.offsetWidth; icon.classList.add('cart-bounce'); }
+        }
+        setTimeout(() => { document.getElementById('loader').classList.add('fade-out'); }, 800);
     </script>
     <script src="script.js"></script>
     <script>
