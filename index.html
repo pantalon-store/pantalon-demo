@@ -3,78 +3,73 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pantalon - Men's Fashion</title>
-    <!-- استدعاء ملف التنسيقات الخارجي -->
+    <title>Pantalon - الرئيسية</title>
     <link rel="stylesheet" href="style.css" />
-    <!-- Tailwind CDN (لسه شغال) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome للأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
-<body>
+<body class="bg-black text-white">
 
-    <!-- ================= الهيدر ================= -->
+    <!-- الهيدر (نفسه في كل الصفحات) -->
     <header class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800 px-4 py-3 flex justify-between items-center">
         <h1 class="text-2xl font-bold text-[#D4AF37] tracking-widest">PANTALON</h1>
-        <button onclick="toggleCart()" class="relative text-white text-2xl hover:text-[#D4AF37] transition">
-            <i class="fas fa-shopping-bag"></i>
-            <span id="cartCount" class="absolute -top-2 -right-3 bg-red-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
-        </button>
+        <div class="flex items-center gap-4">
+            <a href="jeans.html" class="text-sm hover:text-[#D4AF37] transition">جينز</a>
+            <a href="basics.html" class="text-sm hover:text-[#D4AF37] transition">تيشرتات</a>
+            <a href="sweatpants.html" class="text-sm hover:text-[#D4AF37] transition">سويت بانطس</a>
+            <button onclick="toggleCart()" class="relative text-white text-2xl hover:text-[#D4AF37] transition">
+                <i class="fas fa-shopping-bag"></i>
+                <span id="cartCount" class="absolute -top-2 -right-3 bg-red-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+            </button>
+        </div>
     </header>
 
-    <!-- ================= المحتوى الرئيسي ================= -->
     <main class="pt-20 px-4 max-w-7xl mx-auto">
-
-        <!-- قسم الهيرو -->
-        <div class="text-center py-8 border-b border-gray-800 mb-10">
-            <h2 class="text-6xl md:text-8xl font-bold text-[#D4AF37] tracking-wider drop-shadow-lg">PANTALON</h2>
-            <p class="text-sm md:text-lg text-gray-400 font-light tracking-[0.3em] mt-2 uppercase">Elevate Your Style</p>
-            <div class="flex flex-wrap justify-center gap-4 mt-6">
-                <a href="https://www.instagram.com/pantalon.111" target="_blank" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-105 transition px-6 py-2 rounded-full text-sm font-bold shadow-lg"><i class="fab fa-instagram mr-2"></i> إنستجرام</a>
-                <a href="https://wa.me/201080787739" target="_blank" class="bg-green-500 hover:bg-green-600 transition px-6 py-2 rounded-full text-sm font-bold shadow-lg"><i class="fab fa-whatsapp mr-2"></i> واتساب</a>
-                <a href="https://www.tiktok.com/@pantalon.111" target="_blank" class="bg-gray-800 hover:bg-white hover:text-black transition px-6 py-2 rounded-full text-sm font-bold shadow-lg"><i class="fab fa-tiktok mr-2"></i> تيك توك</a>
+        <!-- ========== الهيرو باللوجو بتاعك ========== -->
+        <div class="text-center py-12 border-b border-gray-800 mb-10">
+            <!-- اللوجو بتاعك (اللي بعتهولي) -->
+            <img src="https://i.imgur.com/4t6A6KO.jpeg" alt="Pantalon Logo" class="w-64 md:w-96 mx-auto mb-6 drop-shadow-2xl" />
+            <p class="text-sm md:text-lg text-gray-400 font-light tracking-[0.3em] uppercase">Elevate Your Style</p>
+            
+            <!-- أزرار التقسيمات -->
+            <div class="flex flex-wrap justify-center gap-4 mt-8">
+                <a href="jeans.html" class="bg-[#D4AF37] hover:bg-[#b8962e] text-black font-bold px-8 py-3 rounded-full transition">👖 تشكيلة الجينز</a>
+                <a href="basics.html" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-8 py-3 rounded-full transition">👕 التيشرتات الأساسي</a>
+                <a href="sweatpants.html" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-8 py-3 rounded-full transition">🩳 سويت بانطس</a>
             </div>
         </div>
 
-        <!-- المنتجات -->
-        <h2 class="text-3xl font-bold text-[#D4AF37] mb-6 text-center">🔥 تشكيلتنا الجديدة</h2>
-        <div id="productsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- هتتعبأ عن طريق script.js -->
+        <!-- رسالة ترحيبية تحت -->
+        <div class="text-center text-gray-500 text-sm">
+            <p>اختر القسم المناسب لتصفح المنتجات وإضافتها للسلة</p>
         </div>
 
-        <!-- الفروع -->
+        <!-- الفروع (نفسها) -->
         <div class="mt-20 border-t border-gray-800 pt-10">
             <h2 class="text-2xl font-semibold text-center text-[#D4AF37] mb-6">فروعنا</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                <div class="bg-gray-900 p-4 rounded-xl hover:bg-gray-800 transition"><p class="font-bold">📍 المعادي</p><a href="https://maps.app.goo.gl/VUgKCANN5nTCHcob6" target="_blank" class="text-sm text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
-                <div class="bg-gray-900 p-4 rounded-xl hover:bg-gray-800 transition"><p class="font-bold">📍 زهراء المعادي</p><a href="https://maps.app.goo.gl/HVnNiCviR7gHZYCa6" target="_blank" class="text-sm text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
-                <div class="bg-gray-900 p-4 rounded-xl hover:bg-gray-800 transition"><p class="font-bold">📍 مدينة نصر</p><a href="https://maps.app.goo.gl/oinSr4eZRo8Xrcex7" target="_blank" class="text-sm text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
+                <div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold">📍 المعادي</p><a href="https://maps.app.goo.gl/VUgKCANN5nTCHcob6" target="_blank" class="text-sm text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
+                <div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold">📍 زهراء المعادي</p><a href="https://maps.app.goo.gl/HVnNiCviR7gHZYCa6" target="_blank" class="text-sm text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
+                <div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold">📍 مدينة نصر</p><a href="https://maps.app.goo.gl/oinSr4eZRo8Xrcex7" target="_blank" class="text-sm text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
             </div>
         </div>
         <div class="text-xs text-gray-600 border-t border-gray-800 pt-6 mt-10 text-center pb-4">© 2026 Pantalon. All Rights Reserved.</div>
     </main>
 
-    <!-- ================= عربة التسوق ================= -->
+    <!-- عربية التسوق (نفسها) -->
     <div id="overlay" class="overlay fixed inset-0 bg-black/70 z-40" onclick="toggleCart()"></div>
     <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-80 bg-gray-900 z-50 shadow-2xl p-6 flex flex-col border-l border-gray-700">
         <div class="flex justify-between items-center border-b border-gray-700 pb-4">
-            <h3 class="text-2xl font-bold text-white">🛒 سلة المشتريات</h3>
+            <h3 class="text-2xl font-bold text-white">🛒 السلة</h3>
             <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
         </div>
-        <div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3">
-            <p class="text-gray-500 text-center">السلة فارغة</p>
-        </div>
+        <div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3"><p class="text-gray-500 text-center">فارغة</p></div>
         <div class="border-t border-gray-700 pt-4 mt-auto">
-            <div class="flex justify-between text-xl font-bold text-white mb-4">
-                <span>الإجمالي:</span>
-                <span id="cartTotal">0.00 ج.م</span>
-            </div>
+            <div class="flex justify-between text-xl font-bold text-white mb-4"><span>الإجمالي:</span><span id="cartTotal">0 ج.م</span></div>
             <button class="w-full bg-[#D4AF37] hover:bg-[#b8962e] text-black font-bold py-3 rounded-lg transition">إتمام الشراء (تجريبي)</button>
-            <p class="text-[10px] text-gray-500 text-center mt-2">نموذج توضيحي</p>
         </div>
     </div>
 
-    <!-- استدعاء ملف الجافا سكربت الخارجي (في الآخر عشان يشتغل صح) -->
     <script src="script.js"></script>
 </body>
 </html>
