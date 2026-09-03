@@ -272,36 +272,51 @@ function addToCartDetail(productId) {
 }
 
 // =============================================
-// CART TOGGLE (Universal Fix - Added Here)
+// CART TOGGLE - Fixed for Mobile & Desktop
 // =============================================
 function toggleCart() {
     const sidebar = document.getElementById('cartSidebar');
     const overlay = document.getElementById('overlay');
-    if (sidebar) {
-        sidebar.classList.toggle('translate-x-full');
-        // On mobile, also toggle hidden class for better UX
-        if (window.innerWidth <= 768) {
-            sidebar.classList.toggle('hidden');
+    if (!sidebar) return;
+
+    // Check if currently hidden
+    const isHidden = sidebar.classList.contains('hidden');
+
+    if (isHidden) {
+        // Show the sidebar
+        sidebar.classList.remove('hidden');
+        // Force reflow to ensure transition works
+        void sidebar.offsetWidth;
+        sidebar.classList.remove('translate-x-full');
+        if (overlay) {
+            overlay.classList.remove('hidden');
         }
-    }
-    if (overlay) {
-        overlay.classList.toggle('hidden');
+    } else {
+        // Hide the sidebar
+        sidebar.classList.add('translate-x-full');
+        if (overlay) {
+            overlay.classList.add('hidden');
+        }
+        // Add hidden class after transition completes
+        setTimeout(() => {
+            sidebar.classList.add('hidden');
+        }, 350);
     }
 }
 
-// Close cart when clicking overlay
+// Close cart when clicking on overlay background
 document.addEventListener('DOMContentLoaded', function() {
     const overlay = document.getElementById('overlay');
     if (overlay) {
         overlay.addEventListener('click', function() {
             const sidebar = document.getElementById('cartSidebar');
-            if (sidebar) {
+            if (sidebar && !sidebar.classList.contains('hidden')) {
                 sidebar.classList.add('translate-x-full');
-                if (window.innerWidth <= 768) {
+                overlay.classList.add('hidden');
+                setTimeout(() => {
                     sidebar.classList.add('hidden');
-                }
+                }, 350);
             }
-            overlay.classList.add('hidden');
         });
     }
 });
