@@ -1,56 +1,147 @@
 <!DOCTYPE html>
 <html lang="ar">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Pantalon - T-Shirts</title><link rel="stylesheet" href="style.css" /><script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /></head>
-<body class="bg-black text-white">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pantalon - T-Shirts</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        #loader { position: fixed; inset: 0; background: #0a0a0a; display: flex; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.6s ease, visibility 0.6s ease; }
+        #loader.fade-out { opacity: 0; visibility: hidden; }
+        .loader-text { font-size: clamp(2.5rem, 10vw, 6rem); font-weight: 900; color: #D4AF37; letter-spacing: 0.15em; opacity: 0; animation: revealText 0.8s forwards; }
+        @keyframes revealText { 0% { opacity: 0; transform: scale(0.9); clip-path: inset(0 100% 0 0); } 100% { opacity: 1; transform: scale(1); clip-path: inset(0 0 0 0); } }
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1a1a1a; border: 1px solid #D4AF37; color: #D4AF37; padding: 10px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; z-index: 999; opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); pointer-events: none; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0px); }
+        .cart-bounce { animation: cartBounce 0.4s ease; }
+        @keyframes cartBounce { 0% { transform: scale(1); } 30% { transform: scale(1.3); color: #D4AF37; } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
+        .mobile-menu { display: none; flex-direction: column; background: #0a0a0a; padding: 20px; border-top: 1px solid #333; position: absolute; top: 60px; left: 0; width: 100%; z-index: 100; gap: 15px; }
+        .mobile-menu.open { display: flex; }
+        @media (min-width: 768px) { .mobile-menu { display: none !important; } .hamburger-btn { display: none !important; } .desktop-nav { display: flex !important; } }
+        @media (max-width: 767px) { .desktop-nav { display: none !important; } .hamburger-btn { display: block !important; } }
+        .hero-title { font-size: clamp(3rem, 12vw, 7rem); letter-spacing: 0.15em; }
+    </style>
+</head>
+<body>
+    <div id="loader"><div class="loader-text">PANTALON</div></div>
+    <div id="toast">✓ Added to Cart</div>
+
     <div class="announcement-bar"><span>🚚 Free Shipping Across Egypt | Delivery in 24-48 Hours</span></div>
-    <header class="sticky top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-gray-800 px-4 py-3 flex justify-between items-center">
-        <a href="index.html" class="text-2xl font-bold text-[#D4AF37] tracking-widest hover:opacity-80">PANTALON</a>
-        <div class="flex items-center gap-4">
-            <a href="jeans.html" class="text-sm hover:text-[#D4AF37] transition">Jeans</a>
-            <a href="basics.html" class="text-sm text-[#D4AF37] border-b border-[#D4AF37]">T-Shirts</a>
-            <a href="sweatpants.html" class="text-sm hover:text-[#D4AF37] transition">Sweatpants</a>
-            <button onclick="toggleCart()" class="relative text-white text-2xl hover:text-[#D4AF37] transition"><i class="fas fa-shopping-bag"></i><span id="cartCount" class="absolute -top-2 -right-3 bg-red-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span></button>
+
+    <header class="sticky top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-gray-800 px-4 py-3 flex items-center justify-between relative">
+        <button onclick="toggleMobileMenu()" class="hamburger-btn text-white text-2xl hover:text-[#D4AF37] transition">☰</button>
+        <div class="flex-1"></div>
+        <button onclick="toggleCart()" class="relative text-white text-2xl hover:text-[#D4AF37] transition" id="cartIcon">
+            <i class="fas fa-shopping-bag"></i>
+            <span id="cartCount" class="absolute -top-2 -right-3 bg-red-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+        </button>
+        <div id="mobileMenu" class="mobile-menu">
+            <a href="jeans.html" class="text-white hover:text-[#D4AF37] transition text-lg font-medium py-2 border-b border-gray-800">👖 Jeans</a>
+            <a href="basics.html" class="text-white hover:text-[#D4AF37] transition text-lg font-medium py-2 border-b border-gray-800">👕 T-Shirts</a>
+            <a href="sweatpants.html" class="text-white hover:text-[#D4AF37] transition text-lg font-medium py-2">🩳 Sweatpants</a>
         </div>
     </header>
+
+    <div class="desktop-nav bg-black/90 border-b border-gray-800 px-4 py-3 flex justify-center gap-8 text-sm">
+        <a href="jeans.html" class="hover:text-[#D4AF37] transition">Jeans</a>
+        <a href="basics.html" class="hover:text-[#D4AF37] transition text-[#D4AF37] border-b border-[#D4AF37]">T-Shirts</a>
+        <a href="sweatpants.html" class="hover:text-[#D4AF37] transition">Sweatpants</a>
+    </div>
+
     <main class="px-4 max-w-7xl mx-auto pb-10">
-        <div class="text-center py-6 border-b border-gray-800 mb-6">
-            <h1 class="text-5xl md:text-7xl font-extrabold text-[#D4AF37] tracking-widest">PANTALON</h1>
-            <p class="text-xs md:text-sm text-gray-400 font-light tracking-[0.3em] uppercase mt-1">Elevate Your Style</p>
+        <div class="text-center py-12 border-b border-gray-800 mb-6">
+            <h1 class="hero-title font-extrabold text-[#D4AF37] tracking-widest drop-shadow-2xl">PANTALON</h1>
+            <p class="text-sm md:text-xl text-gray-300 font-light tracking-[0.3em] uppercase mt-2">WEAR YOUR STYLE.</p>
         </div>
+
+        <div class="marquee-container">
+            <div class="marquee-track">
+                <span>PANTALON</span> <span>•</span> <span>STREETWEAR</span> <span>•</span> <span>DENIM</span> <span>•</span> <span>NEW COLLECTION</span> <span>•</span>
+                <span>PANTALON</span> <span>•</span> <span>STREETWEAR</span> <span>•</span> <span>DENIM</span> <span>•</span> <span>NEW COLLECTION</span> <span>•</span>
+            </div>
+        </div>
+
         <h2 class="text-3xl md:text-4xl font-bold text-[#D4AF37] text-center mb-2">👕 T-Shirts & Basics</h2>
         <p class="text-center text-gray-400 mb-6 text-sm">Sizes M, L, XL</p>
-        
-        <!-- Filters (مقاسات M, L, XL بس) -->
+
         <div class="mb-8 flex flex-col md:flex-row gap-4 items-center justify-between bg-gray-900/50 p-4 rounded-2xl border border-gray-800">
             <input id="searchInput" type="text" placeholder="🔍 Search..." class="search-bar text-sm w-full" />
             <div class="filter-group w-full md:w-auto">
                 <select id="categoryFilter" class="filter-select text-xs w-full md:w-auto"><option value="tshirts" selected>T-Shirts</option></select>
                 <select id="sizeFilter" class="filter-select text-xs w-full md:w-auto">
                     <option value="">All Sizes</option>
-                    <option value="M">M</option>
-                    <option value="L">L</option>
-                    <option value="XL">XL</option>
+                    <option value="M">M</option><option value="L">L</option><option value="XL">XL</option>
                 </select>
-                <select id="colorFilter" class="filter-select text-xs w-full md:w-auto"><option value="">All Colors</option><option value="Black">Black</option><option value="White">White</option><option value="Beige">Beige</option></select>
-                <select id="sortFilter" class="filter-select text-xs w-full md:w-auto"><option value="newest">Newest</option><option value="price-low">Price: Low → High</option><option value="price-high">Price: High → Low</option></select>
+                <select id="colorFilter" class="filter-select text-xs w-full md:w-auto">
+                    <option value="">All Colors</option>
+                    <option value="Black">Black</option><option value="White">White</option>
+                    <option value="Beige">Beige</option>
+                </select>
+                <select id="sortFilter" class="filter-select text-xs w-full md:w-auto">
+                    <option value="newest">Newest</option>
+                    <option value="price-low">Price: Low → High</option>
+                    <option value="price-high">Price: High → Low</option>
+                </select>
             </div>
         </div>
 
-        <div id="productsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6"></div>
+        <div id="productsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
         <div class="text-center mt-10"><a href="index.html" class="text-gray-500 hover:text-white text-sm"><i class="fas fa-arrow-left mr-2"></i> Back to Home</a></div>
-        
-        <div class="mt-16 border-t border-gray-800 pt-10"><h2 class="text-xl md:text-2xl font-semibold text-center text-[#D4AF37] mb-6">فروعنا</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center"><div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold text-sm">📍 المعادي</p><a href="https://maps.app.goo.gl/VUgKCANN5nTCHcob6" target="_blank" class="text-xs text-[#D4AF37] hover:underline">افتح الخريطة</a></div><div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold text-sm">📍 زهراء المعادي</p><a href="https://maps.app.goo.gl/HVnNiCviR7gHZYCa6" target="_blank" class="text-xs text-[#D4AF37] hover:underline">افتح الخريطة</a></div><div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold text-sm">📍 مدينة نصر</p><a href="https://maps.app.goo.gl/oinSr4eZRo8Xrcex7" target="_blank" class="text-xs text-[#D4AF37] hover:underline">افتح الخريطة</a></div></div></div>
-        <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4"><div class="trust-badge text-center p-3 md:p-4 rounded-xl"><div class="text-2xl md:text-3xl mb-1">🛵</div><h4 class="font-bold text-white text-xs md:text-sm">توصيل سريع</h4><p class="text-[10px] md:text-xs text-gray-400">لباب البيت</p></div><div class="trust-badge text-center p-3 md:p-4 rounded-xl"><div class="text-2xl md:text-3xl mb-1">🔄</div><h4 class="font-bold text-white text-xs md:text-sm">معاينة قبل الاستلام</h4><p class="text-[10px] md:text-xs text-gray-400">اطمئن على الجودة</p></div><div class="trust-badge text-center p-3 md:p-4 rounded-xl col-span-2 md:col-span-1"><div class="text-2xl md:text-3xl mb-1">💬</div><h4 class="font-bold text-white text-xs md:text-sm">دعم مباشر</h4><p class="text-[10px] md:text-xs text-gray-400">تواصل واتساب</p></div></div>
-        <div class="text-[10px] md:text-xs text-gray-600 border-t border-gray-800 pt-6 mt-10 text-center pb-4">© 2026 Pantalon</div>
+
+        <div class="mt-16 border-t border-gray-800 pt-10">
+            <h2 class="text-xl md:text-2xl font-semibold text-center text-[#D4AF37] mb-6">فروعنا</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div class="bg-gray-900 p-4 rounded-xl hover:bg-gray-800 transition"><p class="font-bold text-sm">📍 المعادي</p><a href="https://maps.app.goo.gl/VUgKCANN5nTCHcob6" target="_blank" class="text-xs text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
+                <div class="bg-gray-900 p-4 rounded-xl hover:bg-gray-800 transition"><p class="font-bold text-sm">📍 زهراء المعادي</p><a href="https://maps.app.goo.gl/HVnNiCviR7gHZYCa6" target="_blank" class="text-xs text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
+                <div class="bg-gray-900 p-4 rounded-xl hover:bg-gray-800 transition"><p class="font-bold text-sm">📍 مدينة نصر</p><a href="https://maps.app.goo.gl/oinSr4eZRo8Xrcex7" target="_blank" class="text-xs text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
+            </div>
+        </div>
+
+        <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+            <div class="trust-badge text-center p-3 md:p-4 rounded-xl"><div class="text-2xl md:text-3xl mb-1">🛵</div><h4 class="font-bold text-white text-xs md:text-sm">توصيل سريع</h4><p class="text-[10px] md:text-xs text-gray-400">لباب البيت</p></div>
+            <div class="trust-badge text-center p-3 md:p-4 rounded-xl"><div class="text-2xl md:text-3xl mb-1">🔄</div><h4 class="font-bold text-white text-xs md:text-sm">معاينة قبل الاستلام</h4><p class="text-[10px] md:text-xs text-gray-400">اطمئن على الجودة</p></div>
+            <div class="trust-badge text-center p-3 md:p-4 rounded-xl col-span-2 md:col-span-1"><div class="text-2xl md:text-3xl mb-1">💬</div><h4 class="font-bold text-white text-xs md:text-sm">دعم مباشر</h4><p class="text-[10px] md:text-xs text-gray-400">تواصل واتساب</p></div>
+        </div>
+        <div class="text-[10px] md:text-xs text-gray-600 border-t border-gray-800 pt-6 mt-10 text-center pb-4">© 2026 Pantalon. All Rights Reserved.</div>
     </main>
+
     <div id="overlay" class="overlay fixed inset-0 bg-black/70 z-40" onclick="toggleCart()"></div>
-    <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-80 bg-gray-900 z-50 shadow-2xl p-6 flex flex-col border-l border-gray-700"><div class="flex justify-between items-center border-b border-gray-700 pb-4"><h3 class="text-2xl font-bold text-white">🛒 Cart</h3><button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl">&times;</button></div><div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3"><p class="text-gray-500 text-center">Cart is empty</p></div><div class="border-t border-gray-700 pt-4 mt-auto"><div class="flex justify-between text-xl font-bold text-white mb-4"><span>Total:</span><span id="cartTotal">0 EGP</span></div><button onclick="whatsappCheckout()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 shadow-lg shadow-green-900/30"><i class="fab fa-whatsapp text-xl"></i> Order via WhatsApp</button><p class="text-[10px] text-gray-500 text-center mt-2">Smart order message ready</p></div></div>
+    <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-80 bg-gray-900 z-50 shadow-2xl p-6 flex flex-col border-l border-gray-700">
+        <div class="flex justify-between items-center border-b border-gray-700 pb-4">
+            <h3 class="text-2xl font-bold text-white">🛒 Cart</h3>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+        </div>
+        <div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3"><p class="text-gray-500 text-center">Cart is empty</p></div>
+        <div class="border-t border-gray-700 pt-4 mt-auto">
+            <div class="flex justify-between text-xl font-bold text-white mb-4"><span>Total:</span><span id="cartTotal">0 EGP</span></div>
+            <button onclick="whatsappCheckout()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 shadow-lg shadow-green-900/30"><i class="fab fa-whatsapp text-xl"></i> Order via WhatsApp</button>
+            <p class="text-[10px] text-gray-500 text-center mt-2">Smart order message ready</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+        document.querySelectorAll('#mobileMenu a').forEach(link => link.addEventListener('click', () => document.getElementById('mobileMenu').classList.remove('open')));
+        function showToast(message = '✓ Added to Cart') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+        function bounceCartIcon() {
+            const icon = document.getElementById('cartIcon');
+            if (icon) { icon.classList.remove('cart-bounce'); void icon.offsetWidth; icon.classList.add('cart-bounce'); }
+        }
+        setTimeout(() => { const loader = document.getElementById('loader'); if (loader) loader.classList.add('fade-out'); }, 800);
+    </script>
     <script src="script.js"></script>
     <script>
         window.products = [
-            { id: 3, name: "Oversized T-Shirt", category: "tshirts", price: 499, oldPrice: 650, colors: ["White", "Black", "Beige"], sizes: ["M", "L", "XL"], description: "Premium cotton oversized t-shirt.", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop", images: ["https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=700&fit=crop","https://images.unsplash.com/photo-1503342394126-c6e7f1d3c7b9?w=600&h=700&fit=crop"], isBestSeller: true, isNew: false },
-            { id: 4, name: "Classic Black T-Shirt", category: "tshirts", price: 350, oldPrice: null, colors: ["Black"], sizes: ["M", "L", "XL"], description: "The perfect classic black tee.", image: "https://images.unsplash.com/photo-1503342394126-c6e7f1d3c7b9?w=400&h=500&fit=crop", images: ["https://images.unsplash.com/photo-1503342394126-c6e7f1d3c7b9?w=600&h=700&fit=crop"], isBestSeller: false, isNew: true },
-            { id: 8, name: "Beige Oversized Tee", category: "tshirts", price: 450, oldPrice: null, colors: ["Beige"], sizes: ["M", "L", "XL"], description: "Premium beige oversized t-shirt.", image: "https://images.unsplash.com/photo-1519638831568-d9854f47c9e1?w=400&h=500&fit=crop", images: ["https://images.unsplash.com/photo-1519638831568-d9854f47c9e1?w=600&h=700&fit=crop"], isBestSeller: false, isNew: false }
+            { id: 3, name: "Oversized T-Shirt", category: "tshirts", fit: null, price: 499, oldPrice: 650, colors: ["White", "Black", "Beige"], sizes: ["M", "L", "XL"], description: "Premium cotton oversized t-shirt.", image: createPlaceholderSVG("Oversized Tee", "T-Shirt"), images: [createPlaceholderSVG("Oversized Tee", "T-Shirt")], isBestSeller: true, isNew: false },
+            { id: 4, name: "Classic Black T-Shirt", category: "tshirts", fit: null, price: 350, oldPrice: null, colors: ["Black"], sizes: ["M", "L", "XL"], description: "The perfect classic black tee.", image: createPlaceholderSVG("Black Tee", "T-Shirt"), images: [createPlaceholderSVG("Black Tee", "T-Shirt")], isBestSeller: false, isNew: true },
+            { id: 8, name: "Beige Oversized Tee", category: "tshirts", fit: null, price: 450, oldPrice: null, colors: ["Beige"], sizes: ["M", "L", "XL"], description: "Premium beige oversized t-shirt.", image: createPlaceholderSVG("Beige Tee", "T-Shirt"), images: [createPlaceholderSVG("Beige Tee", "T-Shirt")], isBestSeller: false, isNew: false }
         ];
         window.cart = JSON.parse(localStorage.getItem('pantalon_cart')) || [];
         renderProducts(window.products, 'productsContainer');
