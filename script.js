@@ -1,5 +1,5 @@
 // =============================================
-// PLACEHOLDER GENERATOR (محسّن)
+// PLACEHOLDER GENERATOR
 // =============================================
 function createPlaceholderSVG(name, category = 'PRODUCT') {
     const cleanName = name || 'PANTALON';
@@ -26,23 +26,25 @@ let currentFitFilter = 'All';
 
 function saveCart() { localStorage.setItem('pantalon_cart', JSON.stringify(cart)); updateCartUI(); }
 
+// ===== FILTER BY FIT =====
 function filterFit(fit) {
     currentFitFilter = fit;
     document.querySelectorAll('.fit-btn').forEach(b => b.classList.remove('active', 'border-[#D4AF37]', 'text-[#D4AF37]'));
-    const active = document.querySelector(`.fit-btn[onclick*="'${fit}'"]`);
+    const active = document.querySelector(`.fit-btn[data-fit="${fit}"]`);
     if (active) { active.classList.add('active', 'border-[#D4AF37]', 'text-[#D4AF37]'); }
     renderProducts(allProducts, 'productsContainer');
 }
 
+// ===== RENDER PRODUCTS =====
 function renderProducts(productsArray, containerId = 'productsContainer') {
     const container = document.getElementById(containerId);
     if (!container) return;
     let display = [...productsArray];
-    // Fit filter
+
     if (currentFitFilter !== 'All' && containerId === 'productsContainer') {
         display = display.filter(p => p.fit === currentFitFilter);
     }
-    // Search & filters
+
     const searchInput = document.getElementById('searchInput');
     const categoryFilter = document.getElementById('categoryFilter');
     const sizeFilter = document.getElementById('sizeFilter');
@@ -53,7 +55,7 @@ function renderProducts(productsArray, containerId = 'productsContainer') {
         const q = searchInput.value.toLowerCase();
         if (q) display = display.filter(p => p.name.toLowerCase().includes(q) || p.category.includes(q));
     }
-    if (categoryFilter && categoryFilter.value) {
+    if (categoryFilter && categoryFilter.value && categoryFilter.value !== '') {
         display = display.filter(p => p.category === categoryFilter.value);
     }
     if (sizeFilter && sizeFilter.value) {
@@ -107,6 +109,7 @@ function renderProducts(productsArray, containerId = 'productsContainer') {
     `}).join('');
 }
 
+// ===== QUICK ADD =====
 function quickAdd(productId) {
     const product = allProducts.find(p => p.id === productId);
     if (!product) return;
@@ -120,6 +123,7 @@ function quickAdd(productId) {
     showToast(`✓ ${product.name} added!`);
 }
 
+// ===== CART FUNCTIONS =====
 function removeFromCart(idx) { cart.splice(idx,1); saveCart(); }
 function increaseQty(idx) { cart[idx].quantity += 1; saveCart(); }
 function decreaseQty(idx) {
@@ -156,7 +160,7 @@ function updateCartUI() {
     document.querySelectorAll('#cartTotal').forEach(el => el.textContent = total.toFixed(2) + ' EGP');
 }
 
-function toggleCart() { /* defined in index.html */ }
+// ===== WHATSAPP =====
 function whatsappCheckout() {
     if (cart.length === 0) { alert('Your cart is empty!'); return; }
     let msg = 'Hello Pantalon 👋,%0aI would like to order:%0a';
@@ -166,7 +170,145 @@ function whatsappCheckout() {
     window.open(`https://wa.me/201080787739?text=${msg}`, '_blank');
 }
 
-// ===== BOOT =====
+// ===== PRODUCT DETAIL =====
+function renderProductDetail(id) {
+    const product = allProducts.find(p => p.id === id);
+    if (!product) {
+        document.getElementById('productDetail').innerHTML = '<p class="text-center text-[#666] py-20">Product not found.</p>';
+        return;
+    }
+    const discount = product.oldPrice ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100) : 0;
+    const gallery = product.images.map((img, i) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-[#D4AF37] transition" onclick="changeMainImage(this.src)" />`).join('');
+
+    document.getElementById('productDetail').innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <img id="mainImage" src="${product.images[0]}" class="w-full h-72 md:h-96 object-cover rounded-2xl border border-[#2a2a2a]" />
+                <div class="flex gap-2 mt-4 overflow-x-auto pb-2">${gallery}</div>
+            </div>
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-[#111]">${product.name}</h1>
+                <div class="flex items-center gap-3 mt-2">
+                    <span class="text-2xl font-bold text-[#D4AF37]">${product.price} EGP</span>
+                    ${product.oldPrice ? `<span class="text-lg text-[#666] line-through">${product.oldPrice} EGP</span>` : ''}
+                    ${discount > 0 ? `<span class="bg-green-500 text-white text-sm font-bold px-2 py-1 rounded">-${discount}%</span>` : ''}
+                </div>
+                <p class="text-[#666] mt-4 text-sm leading-relaxed">${product.description}</p>
+
+                <div class="mt-6">
+                    <label class="text-sm text-[#666] block mb-2">Color:</label>
+                    <div class="flex gap-2 flex-wrap" id="colorOptions">
+                        ${product.colors.map(c => `<button onclick="selectColor(this, '${c}')" class="px-4 py-2 border border-[#D9D6CC] rounded-full text-xs hover:border-[#D4AF37] transition">${c}</button>`).join('')}
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <label class="text-sm text-[#666] block mb-2">Size:</label>
+                    <div class="flex gap-2 flex-wrap" id="sizeOptions">
+                        ${product.sizes.map(s => `<button onclick="selectSize(this, '${s}')" class="px-4 py-2 border border-[#D9D6CC] rounded-full text-xs hover:border-[#D4AF37] transition">${s}</button>`).join('')}
+                    </div>
+                </div>
+
+                <button onclick="addToCartDetail(${product.id})" class="w-full mt-6 bg-[#D4AF37] hover:bg-[#b8962e] text-[#0B0B0B] font-bold py-3 rounded-full transition flex items-center justify-center gap-2">
+                    <i class="fas fa-cart-plus"></i> Add to Cart
+                </button>
+                <p id="detailError" class="text-red-400 text-xs mt-2 text-center hidden">⚠️ Please select a color and size first!</p>
+            </div>
+        </div>
+        <div class="mt-16 border-t border-[#D9D6CC] pt-8">
+            <h3 class="text-2xl font-bold text-[#111] mb-4">✨ You May Also Like</h3>
+            <div id="similarProducts" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+        </div>
+    `;
+
+    const similar = allProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+    document.getElementById('similarProducts').innerHTML = similar.map(p => `
+        <div onclick="window.location.href='product.html?id=${p.id}'" class="bg-[#0B0B0B] rounded-xl overflow-hidden cursor-pointer hover:scale-105 transition border border-[#2a2a2a]">
+            <img src="${p.image}" class="w-full h-36 md:h-48 object-cover" />
+            <div class="p-2 md:p-3"><h4 class="text-xs md:text-sm font-bold text-[#F5F4F0]">${p.name}</h4><p class="text-[#D4AF37] font-bold text-sm">${p.price} EGP</p></div>
+        </div>
+    `).join('');
+
+    window._detailColor = null; window._detailSize = null;
+    const firstColor = document.querySelector('#colorOptions button');
+    if (firstColor) { firstColor.classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/10'); window._detailColor = product.colors[0]; }
+    const firstSize = document.querySelector('#sizeOptions button');
+    if (firstSize) { firstSize.classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/10'); window._detailSize = product.sizes[0]; }
+}
+
+// ===== DETAIL HELPERS =====
+function changeMainImage(src) { document.getElementById('mainImage').src = src; }
+
+function selectColor(el, color) {
+    document.querySelectorAll('#colorOptions button').forEach(b => b.classList.remove('border-[#D4AF37]', 'bg-[#D4AF37]/10'));
+    el.classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/10');
+    window._detailColor = color;
+    document.getElementById('detailError')?.classList.add('hidden');
+}
+
+function selectSize(el, size) {
+    document.querySelectorAll('#sizeOptions button').forEach(b => b.classList.remove('border-[#D4AF37]', 'bg-[#D4AF37]/10'));
+    el.classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/10');
+    window._detailSize = size;
+    document.getElementById('detailError')?.classList.add('hidden');
+}
+
+function addToCartDetail(productId) {
+    const product = allProducts.find(p => p.id === productId);
+    if (!product) return;
+
+    if (!window._detailColor || !window._detailSize) {
+        const err = document.getElementById('detailError');
+        if (err) { err.classList.remove('hidden'); err.textContent = '⚠️ Please select a color and size first!'; }
+        return;
+    }
+
+    const existing = cart.find(i => i.id === productId && i.size === window._detailSize && i.color === window._detailColor);
+    if (existing) existing.quantity += 1;
+    else cart.push({ ...product, size: window._detailSize, color: window._detailColor, quantity: 1 });
+    saveCart();
+    bounceCartIcon();
+    showToast(`✓ ${product.name} added!`);
+}
+
+// =============================================
+// CART TOGGLE (Universal Fix - Added Here)
+// =============================================
+function toggleCart() {
+    const sidebar = document.getElementById('cartSidebar');
+    const overlay = document.getElementById('overlay');
+    if (sidebar) {
+        sidebar.classList.toggle('translate-x-full');
+        // On mobile, also toggle hidden class for better UX
+        if (window.innerWidth <= 768) {
+            sidebar.classList.toggle('hidden');
+        }
+    }
+    if (overlay) {
+        overlay.classList.toggle('hidden');
+    }
+}
+
+// Close cart when clicking overlay
+document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('overlay');
+    if (overlay) {
+        overlay.addEventListener('click', function() {
+            const sidebar = document.getElementById('cartSidebar');
+            if (sidebar) {
+                sidebar.classList.add('translate-x-full');
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.add('hidden');
+                }
+            }
+            overlay.classList.add('hidden');
+        });
+    }
+});
+
+// =============================================
+// BOOT
+// =============================================
 document.addEventListener('DOMContentLoaded', function() {
     // Render sections
     if (document.getElementById('featuredContainer')) {
@@ -189,7 +331,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     if (document.getElementById('productDetail')) {
         const id = parseInt(new URLSearchParams(window.location.search).get('id'));
-        renderProductDetail(id);
+        if (id) renderProductDetail(id);
     }
     updateCartUI();
 
@@ -217,77 +359,3 @@ document.addEventListener('DOMContentLoaded', function() {
     if (colorFilter) colorFilter.addEventListener('change', applyFilters);
     if (sortFilter) sortFilter.addEventListener('change', applyFilters);
 });
-
-// ===== PRODUCT DETAIL =====
-function renderProductDetail(id) {
-    const product = allProducts.find(p => p.id === id);
-    if (!product) {
-        document.getElementById('productDetail').innerHTML = '<p class="text-center text-[#666]">Product not found.</p>';
-        return;
-    }
-    const discount = product.oldPrice ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100) : 0;
-    const gallery = product.images.map((img, i) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-cover rounded cursor-pointer border-2 border-transparent hover:border-[#D4AF37] transition" onclick="changeMainImage(this.src)" />`).join('');
-    document.getElementById('productDetail').innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div><img id="mainImage" src="${product.images[0]}" class="w-full h-72 md:h-96 object-cover rounded-2xl border border-[#2a2a2a]" /><div class="flex gap-2 mt-4 overflow-x-auto pb-2">${gallery}</div></div>
-            <div>
-                <h1 class="text-2xl md:text-3xl font-bold text-[#111]">${product.name}</h1>
-                <div class="flex items-center gap-3 mt-2">
-                    <span class="text-2xl font-bold text-[#D4AF37]">${product.price} EGP</span>
-                    ${product.oldPrice ? `<span class="text-lg text-[#666] line-through">${product.oldPrice} EGP</span>` : ''}
-                    ${discount > 0 ? `<span class="bg-green-500 text-white text-sm font-bold px-2 py-1 rounded">-${discount}%</span>` : ''}
-                </div>
-                <p class="text-[#666] mt-4 text-sm">${product.description}</p>
-                <div class="mt-4"><label class="text-sm text-[#666] block mb-1">Color:</label><div class="flex gap-2 flex-wrap" id="colorOptions">${product.colors.map(c => `<button onclick="selectColor(this,'${c}')" class="px-4 py-1 border border-[#D9D6CC] rounded-full text-xs hover:border-[#D4AF37] transition">${c}</button>`).join('')}</div></div>
-                <div class="mt-4"><label class="text-sm text-[#666] block mb-1">Size:</label><div class="flex gap-2 flex-wrap" id="sizeOptions">${product.sizes.map(s => `<button onclick="selectSize(this,'${s}')" class="px-4 py-1 border border-[#D9D6CC] rounded-full text-xs hover:border-[#D4AF37] transition">${s}</button>`).join('')}</div></div>
-                <button onclick="addToCartDetail(${product.id})" class="w-full mt-6 bg-[#D4AF37] hover:bg-[#b8962e] text-[#0B0B0B] font-bold py-3 rounded-full transition"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-                <p id="detailError" class="text-red-400 text-xs mt-2 hidden">⚠️ Please select a color and size first!</p>
-            </div>
-        </div>
-        <div class="mt-16 border-t border-[#D9D6CC] pt-8">
-            <h3 class="text-2xl font-bold text-[#111] mb-4">✨ You May Also Like</h3>
-            <div id="similarProducts" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
-        </div>
-    `;
-    const similar = allProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0,4);
-    document.getElementById('similarProducts').innerHTML = similar.map(p => `
-        <div onclick="window.location.href='product.html?id=${p.id}'" class="bg-[#0B0B0B] rounded-xl overflow-hidden cursor-pointer hover:scale-105 transition border border-[#2a2a2a]">
-            <img src="${p.image}" class="w-full h-36 md:h-48 object-cover" />
-            <div class="p-2 md:p-3"><h4 class="text-xs md:text-sm font-bold text-[#F5F4F0]">${p.name}</h4><p class="text-[#D4AF37] font-bold text-sm">${p.price} EGP</p></div>
-        </div>
-    `).join('');
-    window._detailColor = null; window._detailSize = null;
-    const firstColor = document.querySelector('#colorOptions button');
-    if (firstColor) { firstColor.classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/10'); window._detailColor = product.colors[0]; }
-    const firstSize = document.querySelector('#sizeOptions button');
-    if (firstSize) { firstSize.classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/10'); window._detailSize = product.sizes[0]; }
-}
-
-function changeMainImage(src) { document.getElementById('mainImage').src = src; }
-function selectColor(el, color) {
-    document.querySelectorAll('#colorOptions button').forEach(b => b.classList.remove('border-[#D4AF37]', 'bg-[#D4AF37]/10'));
-    el.classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/10');
-    window._detailColor = color;
-    document.getElementById('detailError')?.classList.add('hidden');
-}
-function selectSize(el, size) {
-    document.querySelectorAll('#sizeOptions button').forEach(b => b.classList.remove('border-[#D4AF37]', 'bg-[#D4AF37]/10'));
-    el.classList.add('border-[#D4AF37]', 'bg-[#D4AF37]/10');
-    window._detailSize = size;
-    document.getElementById('detailError')?.classList.add('hidden');
-}
-function addToCartDetail(productId) {
-    const product = allProducts.find(p => p.id === productId);
-    if (!product) return;
-    if (!window._detailColor || !window._detailSize) {
-        const err = document.getElementById('detailError');
-        if (err) { err.classList.remove('hidden'); err.textContent = '⚠️ Please select a color and size first!'; }
-        return;
-    }
-    const existing = cart.find(i => i.id === productId && i.size === window._detailSize && i.color === window._detailColor);
-    if (existing) existing.quantity += 1;
-    else cart.push({ ...product, size: window._detailSize, color: window._detailColor, quantity: 1 });
-    saveCart();
-    bounceCartIcon();
-    showToast(`✓ ${product.name} added!`);
-}
