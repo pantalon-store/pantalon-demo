@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pantalon - Product Details</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body class="bg-black text-white">
+    <div class="announcement-bar"><span>🚚 Free Shipping Across Egypt | Delivery in 24-48 Hours</span></div>
+    <header class="sticky top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-gray-800 px-4 py-3 flex justify-between items-center">
+        <a href="index.html" class="text-2xl font-bold text-[#D4AF37] tracking-widest hover:opacity-80">PANTALON</a>
+        <div class="flex items-center gap-4">
+            <a href="jeans.html" class="text-sm hover:text-[#D4AF37] transition">Jeans</a>
+            <a href="basics.html" class="text-sm hover:text-[#D4AF37] transition">T-Shirts</a>
+            <a href="sweatpants.html" class="text-sm hover:text-[#D4AF37] transition">Sweatpants</a>
+            <button onclick="toggleCart()" class="relative text-white text-2xl hover:text-[#D4AF37] transition">
+                <i class="fas fa-shopping-bag"></i>
+                <span id="cartCount" class="absolute -top-2 -right-3 bg-red-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+            </button>
+        </div>
+    </header>
+    <main class="px-4 max-w-7xl mx-auto py-8">
+        <a href="index.html" class="text-gray-400 hover:text-white text-sm mb-4 inline-block"><i class="fas fa-arrow-left mr-2"></i> Back to Home</a>
+        <div id="productDetail"></div>
+    </main>
+    <div id="overlay" class="overlay fixed inset-0 bg-black/70 z-40" onclick="toggleCart()"></div>
+    <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-80 bg-gray-900 z-50 shadow-2xl p-6 flex flex-col border-l border-gray-700">
+        <div class="flex justify-between items-center border-b border-gray-700 pb-4"><h3 class="text-2xl font-bold text-white">🛒 Cart</h3><button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl">&times;</button></div>
+        <div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3"><p class="text-gray-500 text-center">Cart is empty</p></div>
+        <div class="border-t border-gray-700 pt-4 mt-auto">
+            <div class="flex justify-between text-xl font-bold text-white mb-4"><span>Total:</span><span id="cartTotal">0 EGP</span></div>
+            <button onclick="whatsappCheckout()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 shadow-lg shadow-green-900/30"><i class="fab fa-whatsapp text-xl"></i> Order via WhatsApp</button>
+            <p class="text-[10px] text-gray-500 text-center mt-2">Smart order message ready</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
