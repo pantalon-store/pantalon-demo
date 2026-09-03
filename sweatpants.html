@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Pantalon - سويت بانطس</title><link rel="stylesheet" href="style.css" /><script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /></head>
+<body class="bg-black text-white">
+    <header class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800 px-4 py-3 flex justify-between items-center">
+        <a href="index.html" class="text-2xl font-bold text-[#D4AF37] tracking-widest hover:opacity-80">PANTALON</a>
+        <div class="flex items-center gap-4">
+            <a href="jeans.html" class="text-sm hover:text-[#D4AF37] transition">جينز</a>
+            <a href="basics.html" class="text-sm hover:text-[#D4AF37] transition">تيشرتات</a>
+            <a href="sweatpants.html" class="text-sm text-[#D4AF37] border-b border-[#D4AF37]">سويت بانطس</a>
+            <button onclick="toggleCart()" class="relative text-white text-2xl hover:text-[#D4AF37] transition"><i class="fas fa-shopping-bag"></i><span id="cartCount" class="absolute -top-2 -right-3 bg-red-600 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span></button>
+        </div>
+    </header>
+    <main class="pt-20 px-4 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-[#D4AF37] text-center mb-2">🩳 سويت بانطس</h2>
+        <p class="text-center text-gray-400 mb-8">مقاسات M, L, XL</p>
+        <div id="productsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div class="text-center mt-10"><a href="index.html" class="text-gray-500 hover:text-white text-sm"><i class="fas fa-arrow-left mr-2"></i> العودة للرئيسية</a></div>
+        <div class="mt-20 border-t border-gray-800 pt-6 text-center text-xs text-gray-600">© 2026 Pantalon</div>
+    </main>
+    <!-- سلة -->
+    <div id="overlay" class="overlay fixed inset-0 bg-black/70 z-40" onclick="toggleCart()"></div>
+    <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-80 bg-gray-900 z-50 shadow-2xl p-6 flex flex-col border-l border-gray-700">
+        <div class="flex justify-between items-center border-b border-gray-700 pb-4"><h3 class="text-2xl font-bold text-white">🛒 السلة</h3><button onclick="toggleCart()" class="text-gray-400 hover:text-white text-2xl">&times;</button></div>
+        <div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3"><p class="text-gray-500 text-center">فارغة</p></div>
+        <div class="border-t border-gray-700 pt-4 mt-auto"><div class="flex justify-between text-xl font-bold text-white mb-4"><span>الإجمالي:</span><span id="cartTotal">0 ج.م</span></div><button class="w-full bg-[#D4AF37] hover:bg-[#b8962e] text-black font-bold py-3 rounded-lg transition">إتمام الشراء (تجريبي)</button></div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        window.products = [
+            { id: 8, name: "سويتبانتس رياضي", price: 590, size: "M-XL", color: "رمادي", image: "https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=400&h=500&fit=crop" },
+            { id: 9, name: "سويتبانتس كلاسيك", price: 620, size: "M-XL", color: "أسود", image: "https://images.unsplash.com/photo-1536599018102-9f803c140fc1?w=400&h=500&fit=crop" },
+            { id: 10, name: "سويتبانتس واسح", price: 670, size: "M-XL", color: "بيج", image: "https://images.unsplash.com/photo-1516478177764-9fe0bd37531a?w=400&h=500&fit=crop" }
+        ];
+        window.cart = [];
+        renderProducts();
+        updateCartUI();
+    </script>
+</body>
+</html>
