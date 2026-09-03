@@ -13,12 +13,13 @@
 }
 .announcement-bar span {
     display: inline-block;
-    animation: scrollText 15s linear infinite;
+    animation: scrollText 20s linear infinite;
 }
 @keyframes scrollText {
     0% { transform: translateX(100%); }
     100% { transform: translateX(-100%); }
 }
+
 /* شارات الثقة */
 .trust-badge {
     background: #1a1a1a;
@@ -29,7 +30,8 @@
     border-color: #D4AF37;
     transform: translateY(-3px);
 }
-/* محدد المقاسات والألوان */
+
+/* محددات الحجم واللون */
 .size-select, .filter-select {
     background: #1f1f1f;
     color: white;
@@ -43,7 +45,8 @@
 .size-select:focus, .filter-select:focus {
     border-color: #D4AF37;
 }
-/* حركات عربية التسوق */
+
+/* عربة التسوق */
 .cart-sidebar {
     transition: 0.3s ease-in-out;
     transform: translateX(100%);
@@ -60,11 +63,68 @@
     opacity: 1;
     pointer-events: auto;
 }
-.product-card:hover {
-    transform: scale(1.02);
-    transition: 0.2s;
+
+/* ====== PRODUCT CARD (HOVER + SCALE) ====== */
+.product-card {
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    will-change: transform;
+    border-color: #1f1f1f;
 }
-/* شريط البحث */
+.product-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(212, 175, 55, 0.2);
+    border-color: #D4AF37;
+}
+.product-card .hover-actions {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.product-card:hover .hover-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* On mobile, always show actions */
+@media (max-width: 640px) {
+    .product-card .hover-actions {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ====== MARQUEE (شريط متحرك) ====== */
+.marquee-container {
+    background: #0a0a0a;
+    border-top: 1px solid #1a1a1a;
+    border-bottom: 1px solid #1a1a1a;
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-bottom: 2rem;
+}
+.marquee-track {
+    display: inline-block;
+    animation: marqueeScroll 25s linear infinite;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: #D4AF37;
+}
+.marquee-track span {
+    margin: 0 12px;
+}
+.marquee-track span:nth-child(odd) {
+    color: #D4AF37;
+}
+.marquee-track span:nth-child(even) {
+    color: #444;
+}
+@keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* ====== SEARCH & FILTERS ====== */
 .search-bar {
     background: #1a1a1a;
     border: 1px solid #333;
@@ -78,16 +138,16 @@
 .search-bar:focus {
     border-color: #D4AF37;
     outline: none;
-    box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
 }
-/* فلتر الهيدر */
 .filter-group {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     align-items: center;
 }
-/* تصميم الموبايل */
+
+/* ====== RESPONSIVE ====== */
 @media (max-width: 640px) {
     .filter-group {
         flex-direction: column;
@@ -95,5 +155,9 @@
     }
     .search-bar {
         max-width: 100%;
+    }
+    .marquee-track {
+        font-size: 0.8rem;
+        animation-duration: 15s;
     }
 }
