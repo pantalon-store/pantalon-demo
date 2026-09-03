@@ -18,13 +18,10 @@
         .hero { background: #F5F4F0; padding: 40px 0 20px 0; border-bottom: 1px solid #D9D6CC; text-align: center; }
         .hero h1 { color: #D4AF37; font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; letter-spacing: 0.1em; }
         .hero p { color: #666; font-size: 1.2rem; letter-spacing: 0.2em; margin-top: 8px; }
-        /* شريط التنقل الأفقي الجديد */
         .nav-categories { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; border-top: 1px solid #D9D6CC; padding-top: 1.5rem; }
         .nav-categories a { color: #111; text-decoration: none; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em; transition: 0.3s; padding: 4px 0; border-bottom: 2px solid transparent; }
         .nav-categories a:hover { color: #D4AF37; border-bottom-color: #D4AF37; }
         .nav-categories a.active { color: #D4AF37; border-bottom-color: #D4AF37; }
-        .btn-cat { background: #151515; color: #F5F4F0; padding: 8px 20px; border-radius: 50px; transition: 0.3s; }
-        .btn-cat:hover { background: #D4AF37; color: #0B0B0B; }
         .marquee { background: #0B0B0B; color: #D4AF37; padding: 12px 0; overflow: hidden; white-space: nowrap; border-top: 1px solid #222; border-bottom: 1px solid #222; }
         .marquee span { display: inline-block; animation: marqueeScroll 25s linear infinite; margin: 0 20px; }
         @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -58,23 +55,20 @@
         @keyframes cartBounce { 0% { transform: scale(1); } 30% { transform: scale(1.3); color: #D4AF37; } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
         .fit-btn { background: transparent; border: 1px solid #D9D6CC; color: #666; transition: all 0.3s; padding: 6px 16px; border-radius: 50px; font-size: 0.9rem; cursor: pointer; }
         .fit-btn:hover, .fit-btn.active { border-color: #D4AF37; color: #D4AF37; background: rgba(212,175,55,0.05); }
+        .filter-group { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
         @media (max-width: 640px) {
+            .filter-group { flex-direction: column; align-items: stretch; }
             .nav-categories { gap: 0.8rem; font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- LOADER -->
     <div id="loader"><div class="loader-text">PANTALON</div></div>
-
-    <!-- TOAST -->
     <div id="toast">✓ Added to Cart</div>
 
-    <!-- SHIPPING BAR -->
     <div class="announcement-bar"><span>🚚 Free Shipping Across Egypt | Delivery in 24-48 Hours</span></div>
 
-    <!-- HEADER (شريط التنقل العلوي - من غير أزرار الأقسام) -->
     <header class="navbar px-4 py-3 flex items-center justify-between relative">
         <button onclick="toggleMobile()" class="text-[#F5F4F0] text-2xl hover:text-[#D4AF37] transition block md:hidden">☰</button>
         <div class="flex-1"></div>
@@ -84,34 +78,31 @@
         </button>
         <div id="mobileMenu" class="mobile-menu hidden absolute top-full left-0 w-full z-50 flex-col gap-3">
             <a href="jeans.html">👖 Jeans</a>
-            <a href="basics.html">👕 T-Shirts</a>
+            <a href="shorts.html">🩳 Shorts</a>
             <a href="sweatpants.html">🩳 Sweatpants</a>
+            <a href="basics.html">👕 T-Shirts</a>
+            <a href="index.html">🏠 Home</a>
         </div>
     </header>
 
     <main class="px-4 max-w-7xl mx-auto pb-10" style="background:#F5F4F0;">
 
-        <!-- HERO -->
         <div class="hero">
             <h1>PANTALON</h1>
             <p>WEAR YOUR STYLE.</p>
-
-            <!-- شريط التنقل الأفقي الجديد (زي الصورة) -->
             <div class="nav-categories">
                 <a href="jeans.html">Jeans</a>
-                <a href="#">Shorts</a>
+                <a href="shorts.html">Shorts</a>
                 <a href="sweatpants.html">Sweatpants</a>
                 <a href="basics.html">T-Shirts</a>
                 <a href="index.html" class="active">Home</a>
             </div>
         </div>
 
-        <!-- MARQUEE -->
         <div class="marquee">
             <span>PANTALON • STREETWEAR • DENIM • NEW COLLECTION • PANTALON • STREETWEAR • DENIM • NEW COLLECTION •</span>
         </div>
 
-        <!-- SHOP BY FIT -->
         <section class="my-12 text-center">
             <h2 class="text-2xl md:text-3xl font-bold text-[#111]">SHOP BY FIT</h2>
             <p class="text-[#666] text-sm mb-6">Find your perfect silhouette</p>
@@ -124,10 +115,8 @@
             </div>
         </section>
 
-        <!-- PRODUCTS GRID -->
         <div id="productsContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
 
-        <!-- NEW ARRIVALS -->
         <section class="mt-16 border-t border-[#D9D6CC] pt-10">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl md:text-3xl font-bold text-[#D4AF37]">✨ New Arrivals</h2>
@@ -136,7 +125,6 @@
             <div id="newArrivalsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6"></div>
         </section>
 
-        <!-- BEST SELLERS -->
         <section class="mt-16 border-t border-[#D9D6CC] pt-10">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl md:text-3xl font-bold text-[#D4AF37]">🔥 Best Sellers</h2>
@@ -145,7 +133,6 @@
             <div id="bestSellersContainer" class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6"></div>
         </section>
 
-        <!-- BRANCHES -->
         <div class="mt-16 border-t border-[#D9D6CC] pt-10">
             <h2 class="text-xl md:text-2xl font-semibold text-center text-[#111] mb-6">فروعنا</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -155,7 +142,6 @@
             </div>
         </div>
 
-        <!-- TRUST BADGES -->
         <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
             <div class="trust-badge"><div class="text-2xl md:text-3xl mb-1">🛵</div><h4>توصيل سريع</h4><p>لباب البيت</p></div>
             <div class="trust-badge"><div class="text-2xl md:text-3xl mb-1">🔄</div><h4>معاينة قبل الاستلام</h4><p>اطمئن على الجودة</p></div>
@@ -165,7 +151,6 @@
         <div class="text-center text-[#666] text-sm border-t border-[#D9D6CC] pt-6 mt-10">© 2026 Pantalon. All Rights Reserved.</div>
     </main>
 
-    <!-- CART SIDEBAR -->
     <div id="overlay" class="fixed inset-0 bg-black/70 z-40 hidden" onclick="toggleCart()"></div>
     <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-80 z-50 shadow-2xl p-6 flex flex-col transition-transform duration-300 translate-x-full">
         <div class="flex justify-between items-center border-b border-[#2a2a2a] pb-4">
