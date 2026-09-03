@@ -67,7 +67,7 @@
             70% { transform: scale(0.9); }
             100% { transform: scale(1); }
         }
-        /* Mobile Menu (same as before) */
+        /* Mobile Menu */
         .mobile-menu { display: none; flex-direction: column; background: #0a0a0a; padding: 20px; border-top: 1px solid #333; position: absolute; top: 60px; left: 0; width: 100%; z-index: 100; gap: 15px; }
         .mobile-menu.open { display: flex; }
         @media (min-width: 768px) { .mobile-menu { display: none !important; } .hamburger-btn { display: none !important; } .desktop-nav { display: flex !important; } }
@@ -114,7 +114,7 @@
 
     <main class="px-4 max-w-7xl mx-auto pb-10">
 
-        <!-- ====== HERO (سنيمائي) ====== -->
+        <!-- ====== HERO ====== -->
         <div class="text-center py-12 border-b border-gray-800 mb-6">
             <h1 class="hero-title font-extrabold text-[#D4AF37] tracking-widest drop-shadow-2xl">PANTALON</h1>
             <p class="text-sm md:text-xl text-gray-300 font-light tracking-[0.3em] uppercase mt-2">WEAR YOUR STYLE.</p>
@@ -125,7 +125,7 @@
             </div>
         </div>
 
-        <!-- ====== MARQUEE (شريط متحرك) ====== -->
+        <!-- ====== MARQUEE ====== -->
         <div class="marquee-container">
             <div class="marquee-track">
                 <span>PANTALON</span> <span>•</span>
@@ -230,6 +230,11 @@
                 icon.classList.add('cart-bounce');
             }
         }
+        // Remove loader
+        setTimeout(() => {
+            const loader = document.getElementById('loader');
+            if (loader) loader.classList.add('fade-out');
+        }, 800);
     </script>
     <script src="script.js"></script>
 </body>
