@@ -10,8 +10,13 @@
 </head>
 <body class="bg-black text-white">
 
-    <!-- الهيدر (نفسه في كل الصفحات) -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-gray-800 px-4 py-3 flex justify-between items-center">
+    <!-- ====== شريط الإعلانات (Announcement Bar) ====== -->
+    <div class="announcement-bar">
+        <span>🚚 الشحن متوفر لجميع المحافظات | التوصيل خلال 24-48 ساعة | استمتع بتجربة تسوق فريدة ✨</span>
+    </div>
+
+    <!-- ====== الهيدر ====== -->
+    <header class="sticky top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-gray-800 px-4 py-3 flex justify-between items-center">
         <h1 class="text-2xl font-bold text-[#D4AF37] tracking-widest">PANTALON</h1>
         <div class="flex items-center gap-4">
             <a href="jeans.html" class="text-sm hover:text-[#D4AF37] transition">جينز</a>
@@ -24,39 +29,61 @@
         </div>
     </header>
 
-    <main class="pt-20 px-4 max-w-7xl mx-auto">
-        <!-- ========== الهيرو باللوجو بتاعك ========== -->
-        <div class="text-center py-12 border-b border-gray-800 mb-10">
-            <!-- اللوجو بتاعك (اللي بعتهولي) -->
-            <img src="https://i.imgur.com/4t6A6KO.jpeg" alt="Pantalon Logo" class="w-64 md:w-96 mx-auto mb-6 drop-shadow-2xl" />
+    <main class="px-4 max-w-7xl mx-auto">
+
+        <!-- ====== الهيرو باللوجو ====== -->
+        <div class="text-center py-8 border-b border-gray-800 mb-6">
+            <img src="https://i.imgur.com/4t6A6KO.jpeg" alt="Pantalon Logo" class="w-64 md:w-96 mx-auto mb-4 drop-shadow-2xl" />
             <p class="text-sm md:text-lg text-gray-400 font-light tracking-[0.3em] uppercase">Elevate Your Style</p>
-            
-            <!-- أزرار التقسيمات -->
-            <div class="flex flex-wrap justify-center gap-4 mt-8">
-                <a href="jeans.html" class="bg-[#D4AF37] hover:bg-[#b8962e] text-black font-bold px-8 py-3 rounded-full transition">👖 تشكيلة الجينز</a>
-                <a href="basics.html" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-8 py-3 rounded-full transition">👕 التيشرتات الأساسي</a>
-                <a href="sweatpants.html" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-8 py-3 rounded-full transition">🩳 سويت بانطس</a>
+            <div class="flex flex-wrap justify-center gap-4 mt-6">
+                <a href="jeans.html" class="bg-[#D4AF37] hover:bg-[#b8962e] text-black font-bold px-6 py-2 rounded-full transition text-sm">👖 الجينز</a>
+                <a href="basics.html" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-2 rounded-full transition text-sm">👕 التيشرتات</a>
+                <a href="sweatpants.html" class="bg-gray-800 hover:bg-gray-700 text-white font-bold px-6 py-2 rounded-full transition text-sm">🩳 سويت بانطس</a>
             </div>
         </div>
 
-        <!-- رسالة ترحيبية تحت -->
-        <div class="text-center text-gray-500 text-sm">
-            <p>اختر القسم المناسب لتصفح المنتجات وإضافتها للسلة</p>
-        </div>
+        <!-- ====== قسم المنتجات المميزة (أحدث الكولكشنات) ====== -->
+        <section>
+            <h2 class="text-3xl font-bold text-[#D4AF37] text-center mb-2">✨ أحدث الكولكشنات</h2>
+            <p class="text-center text-gray-400 text-sm mb-6">أشهر المنتجات اللي عملاءنا بيحبوها</p>
+            <div id="featuredContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- هتتعبأ عن طريق script.js -->
+            </div>
+        </section>
 
-        <!-- الفروع (نفسها) -->
-        <div class="mt-20 border-t border-gray-800 pt-10">
+        <!-- ====== الفروع ====== -->
+        <div class="mt-16 border-t border-gray-800 pt-10">
             <h2 class="text-2xl font-semibold text-center text-[#D4AF37] mb-6">فروعنا</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                <div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold">📍 المعادي</p><a href="https://maps.app.goo.gl/VUgKCANN5nTCHcob6" target="_blank" class="text-sm text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
-                <div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold">📍 زهراء المعادي</p><a href="https://maps.app.goo.gl/HVnNiCviR7gHZYCa6" target="_blank" class="text-sm text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
-                <div class="bg-gray-900 p-4 rounded-xl"><p class="font-bold">📍 مدينة نصر</p><a href="https://maps.app.goo.gl/oinSr4eZRo8Xrcex7" target="_blank" class="text-sm text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
+                <div class="bg-gray-900 p-4 rounded-xl hover:bg-gray-800 transition"><p class="font-bold">📍 المعادي</p><a href="https://maps.app.goo.gl/VUgKCANN5nTCHcob6" target="_blank" class="text-sm text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
+                <div class="bg-gray-900 p-4 rounded-xl hover:bg-gray-800 transition"><p class="font-bold">📍 زهراء المعادي</p><a href="https://maps.app.goo.gl/HVnNiCviR7gHZYCa6" target="_blank" class="text-sm text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
+                <div class="bg-gray-900 p-4 rounded-xl hover:bg-gray-800 transition"><p class="font-bold">📍 مدينة نصر</p><a href="https://maps.app.goo.gl/oinSr4eZRo8Xrcex7" target="_blank" class="text-sm text-[#D4AF37] hover:underline">افتح الخريطة</a></div>
             </div>
         </div>
+
+        <!-- ====== شارات الثقة (Trust Badges) ====== -->
+        <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="trust-badge text-center p-4 rounded-xl">
+                <div class="text-3xl mb-2">🛵</div>
+                <h4 class="font-bold text-white text-sm">توصيل سريع</h4>
+                <p class="text-xs text-gray-400">لباب البيت في أسرع وقت</p>
+            </div>
+            <div class="trust-badge text-center p-4 rounded-xl">
+                <div class="text-3xl mb-2">🔄</div>
+                <h4 class="font-bold text-white text-sm">معاينة قبل الاستلام</h4>
+                <p class="text-xs text-gray-400">اطمئن على جودة المنتج</p>
+            </div>
+            <div class="trust-badge text-center p-4 rounded-xl">
+                <div class="text-3xl mb-2">💬</div>
+                <h4 class="font-bold text-white text-sm">دعم مباشر</h4>
+                <p class="text-xs text-gray-400">تواصل معانا على واتساب</p>
+            </div>
+        </div>
+
         <div class="text-xs text-gray-600 border-t border-gray-800 pt-6 mt-10 text-center pb-4">© 2026 Pantalon. All Rights Reserved.</div>
     </main>
 
-    <!-- عربية التسوق (نفسها) -->
+    <!-- ====== عربة التسوق (مع زرار واتساب) ====== -->
     <div id="overlay" class="overlay fixed inset-0 bg-black/70 z-40" onclick="toggleCart()"></div>
     <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-80 bg-gray-900 z-50 shadow-2xl p-6 flex flex-col border-l border-gray-700">
         <div class="flex justify-between items-center border-b border-gray-700 pb-4">
@@ -65,8 +92,15 @@
         </div>
         <div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3"><p class="text-gray-500 text-center">فارغة</p></div>
         <div class="border-t border-gray-700 pt-4 mt-auto">
-            <div class="flex justify-between text-xl font-bold text-white mb-4"><span>الإجمالي:</span><span id="cartTotal">0 ج.م</span></div>
-            <button class="w-full bg-[#D4AF37] hover:bg-[#b8962e] text-black font-bold py-3 rounded-lg transition">إتمام الشراء (تجريبي)</button>
+            <div class="flex justify-between text-xl font-bold text-white mb-4">
+                <span>الإجمالي:</span>
+                <span id="cartTotal">0 ج.م</span>
+            </div>
+            <!-- زر واتساب الجديد -->
+            <button onclick="whatsappCheckout()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 shadow-lg shadow-green-900/30">
+                <i class="fab fa-whatsapp text-xl"></i> إتمام الطلب عبر واتساب
+            </button>
+            <p class="text-[10px] text-gray-500 text-center mt-2">سيتم فتح واتساب برسالة جاهزة</p>
         </div>
     </div>
 
