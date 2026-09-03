@@ -15,9 +15,14 @@
         .navbar { background: #0B0B0B; border-bottom: 1px solid #D9D6CC; }
         .navbar a { color: #F5F4F0; transition: 0.3s; }
         .navbar a:hover { color: #D4AF37; }
-        .hero { background: #F5F4F0; padding: 40px 0; border-bottom: 1px solid #D9D6CC; text-align: center; }
+        .hero { background: #F5F4F0; padding: 40px 0 20px 0; border-bottom: 1px solid #D9D6CC; text-align: center; }
         .hero h1 { color: #D4AF37; font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; letter-spacing: 0.1em; }
         .hero p { color: #666; font-size: 1.2rem; letter-spacing: 0.2em; margin-top: 8px; }
+        /* شريط التنقل الأفقي الجديد */
+        .nav-categories { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; border-top: 1px solid #D9D6CC; padding-top: 1.5rem; }
+        .nav-categories a { color: #111; text-decoration: none; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em; transition: 0.3s; padding: 4px 0; border-bottom: 2px solid transparent; }
+        .nav-categories a:hover { color: #D4AF37; border-bottom-color: #D4AF37; }
+        .nav-categories a.active { color: #D4AF37; border-bottom-color: #D4AF37; }
         .btn-cat { background: #151515; color: #F5F4F0; padding: 8px 20px; border-radius: 50px; transition: 0.3s; }
         .btn-cat:hover { background: #D4AF37; color: #0B0B0B; }
         .marquee { background: #0B0B0B; color: #D4AF37; padding: 12px 0; overflow: hidden; white-space: nowrap; border-top: 1px solid #222; border-bottom: 1px solid #222; }
@@ -53,6 +58,9 @@
         @keyframes cartBounce { 0% { transform: scale(1); } 30% { transform: scale(1.3); color: #D4AF37; } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
         .fit-btn { background: transparent; border: 1px solid #D9D6CC; color: #666; transition: all 0.3s; padding: 6px 16px; border-radius: 50px; font-size: 0.9rem; cursor: pointer; }
         .fit-btn:hover, .fit-btn.active { border-color: #D4AF37; color: #D4AF37; background: rgba(212,175,55,0.05); }
+        @media (max-width: 640px) {
+            .nav-categories { gap: 0.8rem; font-size: 0.8rem; }
+        }
     </style>
 </head>
 <body>
@@ -66,7 +74,7 @@
     <!-- SHIPPING BAR -->
     <div class="announcement-bar"><span>🚚 Free Shipping Across Egypt | Delivery in 24-48 Hours</span></div>
 
-    <!-- HEADER -->
+    <!-- HEADER (شريط التنقل العلوي - من غير أزرار الأقسام) -->
     <header class="navbar px-4 py-3 flex items-center justify-between relative">
         <button onclick="toggleMobile()" class="text-[#F5F4F0] text-2xl hover:text-[#D4AF37] transition block md:hidden">☰</button>
         <div class="flex-1"></div>
@@ -81,23 +89,20 @@
         </div>
     </header>
 
-    <!-- DESKTOP NAV -->
-    <nav class="navbar hidden md:flex justify-center gap-8 py-3 text-sm">
-        <a href="jeans.html">Jeans</a>
-        <a href="basics.html">T-Shirts</a>
-        <a href="sweatpants.html">Sweatpants</a>
-    </nav>
-
     <main class="px-4 max-w-7xl mx-auto pb-10" style="background:#F5F4F0;">
 
         <!-- HERO -->
         <div class="hero">
             <h1>PANTALON</h1>
             <p>WEAR YOUR STYLE.</p>
-            <div class="flex flex-wrap justify-center gap-3 mt-6">
-                <a href="jeans.html" class="btn-cat">👖 Jeans</a>
-                <a href="basics.html" class="btn-cat">👕 T-Shirts</a>
-                <a href="sweatpants.html" class="btn-cat">🩳 Sweatpants</a>
+
+            <!-- شريط التنقل الأفقي الجديد (زي الصورة) -->
+            <div class="nav-categories">
+                <a href="jeans.html">Jeans</a>
+                <a href="#">Shorts</a>
+                <a href="sweatpants.html">Sweatpants</a>
+                <a href="basics.html">T-Shirts</a>
+                <a href="index.html" class="active">Home</a>
             </div>
         </div>
 
@@ -164,7 +169,7 @@
     <div id="overlay" class="fixed inset-0 bg-black/70 z-40 hidden" onclick="toggleCart()"></div>
     <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 h-full w-80 z-50 shadow-2xl p-6 flex flex-col transition-transform duration-300 translate-x-full">
         <div class="flex justify-between items-center border-b border-[#2a2a2a] pb-4">
-            <h3 class="text-2xl font-bold">🛒 Cart</h3>
+            <h3 class="text-2xl font-bold text-[#F5F4F0]">🛒 Cart</h3>
             <button onclick="toggleCart()" class="text-[#666] hover:text-[#F5F4F0] text-2xl">&times;</button>
         </div>
         <div id="cartItems" class="flex-1 overflow-y-auto py-4 space-y-3"><p class="text-[#666] text-center">Cart is empty</p></div>
